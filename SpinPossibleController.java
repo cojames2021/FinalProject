@@ -1,10 +1,14 @@
 package spinPossible;
 
+<<<<<<< HEAD
 import java.awt.Container;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
+
 
 public class SpinPossibleController extends JFrame {
 	private Grid gameGrid;
@@ -17,6 +21,17 @@ public class SpinPossibleController extends JFrame {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public SpinPossibleController(String title, int gameWindowX, int gameWindowY, int gameWindowWidth, int gameWindowHeight)
+	{
+		 	gameFrame = new JFrame(title);
+	        gameFrame.setSize(gameWindowWidth, gameWindowHeight);
+	        gameFrame.setLocation(gameWindowX, gameWindowY);
+	        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        gameContentPane = gameFrame.getContentPane();
+	        gameContentPane.setLayout(null); // not need layout, will use absolute system
+	        gameFrame.setVisible(true);
 	}
 	
 	public void createGrid(String filename) {
