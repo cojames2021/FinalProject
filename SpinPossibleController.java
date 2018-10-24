@@ -1,7 +1,19 @@
 package spinPossible;
 
-public class SpinPossibleController {
+import java.awt.Container;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javax.swing.JFrame;
+
+public class SpinPossibleController extends JFrame {
+	private Grid gameGrid;
+	private JFrame gameFrame;
+	private int gridSize;
+	private boolean gameIsReady;
+	private Container gameContentPane;
+	private Timer helpTimer;
+	private int helpCounter=0;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
