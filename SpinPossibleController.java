@@ -1,6 +1,5 @@
 package spinPossible;
 
-<<<<<<< HEAD
 import java.awt.Container;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,8 +17,9 @@ public class SpinPossibleController extends JFrame {
 	private Container gameContentPane;
 	private Timer helpTimer;
 	private int helpCounter=0;
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		new SpinPossibleController("Spin Possible", 50, 50, 800, 800);
 
 	}
 	
