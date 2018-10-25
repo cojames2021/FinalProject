@@ -3,6 +3,8 @@ package spinPossible;
 public class Tile<T> {
 	private final T VALUE;
 	private int orientation = 0;
+	private final int UPSIDE_DOWN = 1;
+	private final int RIGHTSIDE_UP = 0;
 	private boolean selected  = false;
 	
 	public Tile(T value)
@@ -23,12 +25,12 @@ public class Tile<T> {
 	}
 	private void changeOrientation()
 	{
-		if(orientation==0)
+		if(orientation==RIGHTSIDE_UP)
 		{
-			orientation=1;
+			orientation=UPSIDE_DOWN;
 		}
 		else {
-			orientation=0;
+			orientation=RIGHTSIDE_UP;
 		}
 	}
 	private boolean isSelected()
