@@ -58,6 +58,10 @@ public class SpinPossibleController extends JFrame {
 		
 	}
 	
+	private void setGridSize() {
+		
+	}
+	
 	private void help() {
 		
 	}
