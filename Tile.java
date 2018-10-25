@@ -14,14 +14,7 @@ public class Tile<T> {
 	}
 	private void select()
 	{
-		if(!selected)
-		{
-			selected = true;
-		}
-		else
-		{
-			selected = false;
-		}
+		selected = !selected;
 	}
 	private void changeOrientation()
 	{
