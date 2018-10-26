@@ -12,11 +12,15 @@ public class Tile<T> {
 		VALUE = value;
 		
 	}
-	private void select()
+	public void select()
 	{
 		selected = !selected;
 	}
-	private void changeOrientation()
+	public void select(boolean selected)
+	{
+		this.selected = selected;
+	}
+	public void changeOrientation()
 	{
 		if(orientation==RIGHTSIDE_UP)
 		{
