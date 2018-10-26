@@ -16,9 +16,9 @@ public class Grid {
 	  0 1 2 3 4 5				
 	0 * * & * * *				00 01 02 03 04 05
 	1 * * * * * *				06 07 08 09 10 11
-	2 * * * * * *				12 13 14 15 16 17
-	3 * * * * * ?				18 19 20 21 22 23
-	4 * ! * * * *				24 25 26 27 28 29
+	2 * * # # # *				12 13 14 15 16 17
+	3 * * # # # ?				18 19 20 21 22 23
+	4 * ! # # # *				24 25 26 27 28 29
 	5 * * * * * *				30 31 32 33 34 35
 ************************************************************************************************************************/
 	
@@ -34,20 +34,47 @@ public class Grid {
 	}
 	public void rotateRectangle()
 	{
-		int top1;
-		int top2;
-		int bottom1;
-		int bottom2;
-		
+		int top1 = -1;
+		int top2 = -1;
+		int bottom1 = -1;
+		int bottom2 = -1;
+		Tile temp;
+		for(int i = 0; i < dimensions*dimensions && top1 < 0 ; i++) // Gets the coordinates of the top-left-most selected Tile
+		{
+			if(selectedTiles[coord1(i)][coord2(i)])
+			{
+				top1 = coord1(i);
+				top2 = coord2(i);
+			}
+		}
+		for(int j = dimensions*dimensions-1; j >= 0 && bottom1 < 0 ; j--) // Gets the coordinates of the bottom-right-most selected Tile
+		{
+			if(selectedTiles[coord1(j)][coord2(j)])
+			{
+				bottom1 = coord1(j);
+				bottom2 = coord2(j);
+			}
+		}
+		for(int i = top1; i <= bottom1; i++)
+		{
+			for(int j = top2; j < bottom2; j++)
+			{
+				temp = tileGrid[i][j];
+				tileGrid[i][j] = tileGrid[bottom1-(i-top1)][bottom2-(j-top2)];
+				tileGrid[i][j].changeOrientation();
+				tileGrid[bottom1-(i-top1)][bottom2-(j-top2)] = temp;
+				tileGrid[bottom1-(i-top1)][bottom2-(j-top2)].changeOrientation();
+			}
+		}
 	}
-	public void switchTiles(int tile1, int tile2)			// Previously named "changePosition"
+	/*private void switchTiles(int tile1, int tile2)			// Previously named "changePosition"
 	{
 		Tile temp = tile(tile1);
 		tileGrid[coord1(tile1)][coord2(tile1)] = tileGrid[coord1(tile2)][coord2(tile2)];
 		tileGrid[coord1(tile1)][coord2(tile1)].changeOrientation();
 		tileGrid[coord1(tile2)][coord2(tile2)] = temp;
-		tileGrid[coord1(tile2)][coord2(tile2)].changeOrientation();	
-	}
+		tileGrid[coord1(tile2)][coord2(tile2)].changeOrientation();
+	}	// */
 	
 	private void fillInRectangle(int topTile, int bottomTile)
 	{
