@@ -3,15 +3,19 @@ package spinPossible;
 public class Grid {
 	private int numberOfTiles;
 	private int dimensions;
-	private Tile[][] thisGrid;
-	private boolean[] selectedTiles;
-	public int selectedCounter=0;
+	private Tile[][] tileGrid;
+	private boolean[][] selectedTiles;
+	public int selectedCounter;
 	
-	public Grid(int dimensions) {
-		thisGrid = new Tile[dimensions][dimensions];
+	public Grid(int dimensions)
+	{
+		tileGrid = new Tile[dimensions][dimensions];
+		selectedTiles = new boolean[dimensions][dimensions];
 		this.dimensions = dimensions;
+		selectedCounter = 0;
+		numberOfTiles = 0;
 	}
-	public void changePosition(int a, int b) {
+	public void switchTiles(int a, int b) {			// Previously named "changePosition"
 		
 	}
 	
