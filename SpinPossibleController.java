@@ -1,6 +1,9 @@
 package spinPossible;
 
 import java.awt.Container;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,16 +37,17 @@ public class SpinPossibleController extends JFrame {
 	        gameFrame.setVisible(true);
 	}
 	
-	public void createGrid(String filename) {
-		
+	public void createGrid(int dimensions) {
+		gameGrid = new Grid(dimensions);
 	}
 	
-	public void placeTilesInGrid() {
-		
+	public void createGrid(String filename)
+	{
+		readFile(filename);
 	}
 	
 	private void rotate() {
-		
+		gameGrid.rotateRectangle();
 	}
 	
 	private boolean finished() {
@@ -55,7 +59,19 @@ public class SpinPossibleController extends JFrame {
 	}
 	
 	private void readFile(String filename) {
-		
+		File gridFile =new File(filename);
+		try {
+			Scanner fileReader = new Scanner(gridFile);
+			int size = fileReader.nextInt();
+			gameGrid = new Grid(size);
+			for(int i = 0; i<size*size;i++) {
+				gameGrid.addTile(new Tile<Integer>(fileReader.nextInt()));
+			}
+			fileReader.close();
+		} 
+		catch (FileNotFoundException e) {
+				
+		}
 	}
 	
 	private void setGridSize() {

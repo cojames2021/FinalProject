@@ -30,11 +30,11 @@ public class Tile<T> {
 			orientation=RIGHTSIDE_UP;
 		}
 	}
-	private boolean isSelected()
+	public boolean isSelected()
 	{
 		return selected;
 	}
-	private int getOrientation() {
+	public int getOrientation() {
 		return orientation;
 	}
 }
