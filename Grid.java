@@ -34,16 +34,42 @@ public class Grid {
 	}
 	public void rotateRectangle()
 	{
+		int top1;
+		int top2;
+		int bottom1;
+		int bottom2;
 		
 	}
-	public void switchTiles(int a, int b)			// Previously named "changePosition"
+	public void switchTiles(int tile1, int tile2)			// Previously named "changePosition"
 	{
-		
+		Tile temp = tile(tile1);
+		tileGrid[coord1(tile1)][coord2(tile1)] = tileGrid[coord1(tile2)][coord2(tile2)];
+		tileGrid[coord1(tile1)][coord2(tile1)].changeOrientation();
+		tileGrid[coord1(tile2)][coord2(tile2)] = temp;
+		tileGrid[coord1(tile2)][coord2(tile2)].changeOrientation();	
 	}
 	
-	private void fillInRectangle(int a, int b)
+	private void fillInRectangle(int topTile, int bottomTile)
 	{
-		
+		if(bottomTile > topTile)
+		{
+			int temp = topTile;
+			topTile=bottomTile;
+			bottomTile=topTile;
+		}
+		int top1 = coord1(topTile);
+		int top2 = coord2(topTile);
+		int bottom1 = coord1(bottomTile);
+		int bottom2 = coord2(bottomTile);
+		for(int i = top1; i <= bottom1; i++)
+		{
+			for(int j = top2; j <= bottom2; j++)
+			{
+				tileGrid[i][j].select(true);
+				selectedTiles[i][j] = true;
+				selectedCounter++;
+			}
+		}
 	}
 	
 	public void addTile(Tile newTile)

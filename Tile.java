@@ -18,7 +18,7 @@ public class Tile<T> {
 	{
 		this.selected = selected;
 	}
-	private void changeOrientation()
+	public void changeOrientation()
 	{
 		if(orientation==0)
 		{
