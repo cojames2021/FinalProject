@@ -10,9 +10,13 @@ public class Tile<T> {
 		VALUE = value;
 		
 	}
-	private void select()
+	public void select()
 	{
 		selected = !selected;
+	}
+	public void select(boolean selected)
+	{
+		this.selected = selected;
 	}
 	private void changeOrientation()
 	{

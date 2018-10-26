@@ -5,7 +5,7 @@ public class Grid {
 	private int dimensions;
 	private Tile[][] tileGrid;
 	private boolean[][] selectedTiles;
-	public int selectedCounter;
+	private int selectedCounter;
 	
 /************************************************************************************************************************
 	Visualization of the Grid
@@ -32,6 +32,10 @@ public class Grid {
 		selectedCounter = 0;
 		numberOfTiles = 0;
 	}
+	public void rotateRectangle()
+	{
+		
+	}
 	public void switchTiles(int a, int b)			// Previously named "changePosition"
 	{
 		
@@ -42,9 +46,17 @@ public class Grid {
 		
 	}
 	
-	public void addTile(Tile a)
+	public void addTile(Tile newTile)
 	{
-		
+		if(numberOfTiles < (dimensions*dimensions)-1)
+		{
+			tileGrid[coord1(numberOfTiles)][coord2(numberOfTiles)] = newTile;
+			numberOfTiles++;
+		}
+		else
+		{
+			throw new IndexOutOfBoundsException("Grid is full. Cannot add another tile.");
+		}
 	}
 	
 	private void randomize()
@@ -52,8 +64,36 @@ public class Grid {
 		
 	}
 	
-	public void clear()
+	public void clear() // Deselects all tiles
 	{
-		
+		for(int i = 0; i < dimensions; i++)
+		{
+			for(int j = 0; j < dimensions; j++)
+			{
+				selectedTiles[i][j] = false;
+				tileGrid[i][j].select(false);
+			}
+		}
+		selectedCounter = 0;
+	}
+	
+	public int numberSelected()
+	{
+		return selectedCounter;
+	}
+	
+	
+	// Helper Functions
+	private int coord1(int tile) // Returns the first coordinate of a given position in tileGrid.
+	{
+		return tile/dimensions;
+	}
+	private int coord2(int tile) // Returns the first coordinate of a given position in tileGrid.
+	{
+		return tile%dimensions;
+	}
+	private Tile tile(int tile) // Returns the tile found at the given position in tileGrid.
+	{
+		return tileGrid[coord1(tile)][coord2(tile)];
 	}
 }
