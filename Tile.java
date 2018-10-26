@@ -28,11 +28,11 @@ public class Tile<T> {
 			orientation=0;
 		}
 	}
-	private boolean isSelected()
+	public boolean isSelected()
 	{
 		return selected;
 	}
-	private int getOrientation() {
+	public int getOrientation() {
 		return orientation;
 	}
 }
