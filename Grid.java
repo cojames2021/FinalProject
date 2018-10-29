@@ -6,6 +6,7 @@ public class Grid {
 	private int numberOfTiles;
 	private int dimensions;
 	private Tile[][] tileGrid;
+	private int numberSelected;
 	
 /************************************************************************************************************************
 	Visualization of the Grid
@@ -29,6 +30,7 @@ public class Grid {
 		tileGrid = new Tile[dimensions][dimensions];
 		this.dimensions = dimensions;
 		numberOfTiles = 0;
+		numberSelected = 0;
 	}
 	public void rotateRectangle() // Rotates the selected rectangle.
 	{
@@ -37,28 +39,28 @@ public class Grid {
 		int bottom1 = -1;
 		int bottom2 = -1;
 		Tile temp;
-		for(int i = 0; i < dimensions*dimensions && top1 < 0 ; i++) // Gets the coordinates of the top-left-most selected Tile
+		/*for(int i = 0; i < dimensions*dimensions && top1 < 0 ; i++) // Gets the coordinates of the top-left-most selected Tile
 		{
 			if(tileGrid[coord1(i)][coord2(i)].isSelected())
 			{
 				top1 = coord1(i);
 				top2 = coord2(i);
 			}
-		}
-		if(top1 < 0) // If no selected tiles were found, then there is nothing that can be rotated. Throw an exception and terminate the function.
+		}	//*/
+		if(top1 < 0) // top1 is still -1, indicating that no selected tiles were found, so there is nothing that can be rotated. Throw an exception and terminate the function.
 		{
 			throw new IllegalStateException("No tiles are currently selected. No rectangle to rotate.");
 		}
 		else // A tile was found, so the function can continue as normal.
 		{
-			for(int j = dimensions*dimensions-1; j >= 0 && bottom1 < 0 ; j--) // Gets the coordinates of the bottom-right-most selected Tile
+			/*for(int j = dimensions*dimensions-1; j >= 0 && bottom1 < 0 ; j--) // Gets the coordinates of the bottom-right-most selected Tile
 			{
 				if(tileGrid[coord1(j)][coord2(j)].isSelected())
 				{
 					bottom1 = coord1(j);
 					bottom2 = coord2(j);
 				}
-			}
+			}//*/
 			for(int i = top1; i <= bottom1; i++)
 			{
 				for(int j = top2; j < bottom2; j++)
@@ -97,9 +99,9 @@ public class Grid {
 		int top2 = coord2(topTile);
 		int bottom1 = coord1(bottomTile);
 		int bottom2 = coord2(bottomTile);
-		for(int i = top1; i <= bottom1; i++)
+		for(int i = Math.min(top1,bottom1); i <= Math.max(top1,bottom1); i++)
 		{
-			for(int j = top2; j <= bottom2; j++)
+			for(int j = Math.min(top2,bottom2); j <= Math.max(top2,bottom2); j++)
 			{
 				tileGrid[i][j].select(true);
 			}
@@ -150,8 +152,44 @@ public class Grid {
 	{
 		return tile%dimensions;
 	}
-	public Tile getTile(int tile) // Returns the tile found at the given position in tileGrid.
+	private Tile getTile(int tile)
 	{
 		return tileGrid[coord1(tile)][coord2(tile)];
+	}
+	private int findTopLeftSelectedTile()
+	{
+		int topLeftTile = -1;
+		for(int i = 0; i < dimensions*dimensions && topLeftTile < 0 ; i++) // Gets the coordinates of the top-left-most selected Tile
+		{
+			if(tileGrid[coord1(i)][coord2(i)].isSelected())
+			{
+				topLeftTile = i;
+			}
+		}
+		return topLeftTile;
+	}
+	private int findBottomRightSelectedTile()
+	{
+		int bottomLeftTile = -1;
+		for(int j = dimensions*dimensions-1; j >= 0 && bottomLeftTile < 0 ; j--) // Gets the coordinates of the bottom-right-most selected Tile
+		{
+			if(tileGrid[coord1(j)][coord2(j)].isSelected())
+			{
+				bottomLeftTile = j;
+			}
+		}
+		return bottomLeftTile;
+	}
+	public void selectTile(int tile) // Originally returned the tile found at the given position in tileGrid; now, sets that tile's selected value to the boolean parameter.
+	{
+		getTile(tile).select(true);
+		if(numberSelected == 1)
+		{
+			fillInRectangle(findTopLeftSelectedTile(),findBottomRightSelectedTile());
+		}
+	}
+	public boolean tileIsSelected(int tile)
+	{
+		return getTile(tile).isSelected();
 	}
 }
