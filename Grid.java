@@ -47,6 +47,11 @@ public class Grid {
 				top2 = coord2(i);
 			}
 		}	//*/
+		top1 = coord1(findTopLeftSelectedTile());
+		top2 = coord2(findTopLeftSelectedTile());
+		bottom1 = coord1(findBottomRightSelectedTile());
+		bottom2 = coord2(findBottomRightSelectedTile());
+		
 		if(top1 < 0) // top1 is still -1, indicating that no selected tiles were found, so there is nothing that can be rotated. Throw an exception and terminate the function.
 		{
 			throw new IllegalStateException("No tiles are currently selected. No rectangle to rotate.");
@@ -61,9 +66,9 @@ public class Grid {
 					bottom2 = coord2(j);
 				}
 			}//*/
-			for(int i = top1; i <= bottom1; i++)
+			for(int i = top1; i <= bottom1/2; i++)
 			{
-				for(int j = top2; j < bottom2; j++)
+				for(int j = top2; j <= bottom2; j++)
 				{
 					temp = tileGrid[i][j];
 					tileGrid[i][j] = tileGrid[bottom1-(i-top1)][bottom2-(j-top2)];
@@ -92,7 +97,7 @@ public class Grid {
 	// Selects all of the tiles in the rectangle.
 	
 	{
-		if(bottomTile > topTile)
+		if(bottomTile < topTile)
 		{
 			int temp = topTile;
 			topTile=bottomTile;
@@ -107,13 +112,14 @@ public class Grid {
 			for(int j = Math.min(top2,bottom2); j <= Math.max(top2,bottom2); j++)
 			{
 				tileGrid[i][j].select(true);
+				numberSelected++;
 			}
 		}
 	}
 	
 	public void addTile(Tile newTile) // Adds a tile to tileGrid. If tileGrid is full, it throws an indexOutOfBounds exception.
 	{
-		if(numberOfTiles < (dimensions*dimensions)-1) // If tileGrid is not full
+		if(numberOfTiles < (dimensions*dimensions)) // If tileGrid is not full
 		{
 			tileGrid[coord1(numberOfTiles)][coord2(numberOfTiles)] = newTile;
 			numberOfTiles++;
@@ -152,10 +158,18 @@ public class Grid {
 		{
 			for(int j = 0; j < dimensions; j++)
 			{
-				returnVal+=tileGrid[i][j]
+				returnVal = returnVal+tileGrid[i][j].getValue()+","+tileGrid[i][j].isSelected()+","+tileGrid[i][j].getOrientation();
+				if(j == dimensions-1)
+				{
+					returnVal+="\n";
+				}
+				else
+				{
+					returnVal+="\t";
+				}
 			}
 		}
-		return "";
+		return returnVal;
 	}
 	
 	// Helper Functions
