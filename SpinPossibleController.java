@@ -9,7 +9,10 @@ import java.util.TimerTask;
 
 import java.awt.Color;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
 public class SpinPossibleController extends JFrame {
@@ -20,6 +23,11 @@ public class SpinPossibleController extends JFrame {
 	private Container gameContentPane;
 	private Timer helpTimer;
 	private int helpCounter=0;
+	private JButton helpButton;
+	private JComboBox difficultyBox;
+	private JComboBox sizeBox;
+	private JPanel gridPanel;
+	private JPanel actionPanel;
 	
 	public static void main(String[] args) {
 		new SpinPossibleController("Spin Possible", 50, 50, 800, 800);
@@ -35,6 +43,7 @@ public class SpinPossibleController extends JFrame {
 	        gameContentPane = gameFrame.getContentPane();
 	        gameContentPane.setLayout(null); // not need layout, will use absolute system
 	        gameFrame.setVisible(true);
+	        
 	}
 	
 	public void createGrid(int dimensions) {
@@ -63,7 +72,7 @@ public class SpinPossibleController extends JFrame {
 		try {
 			Scanner fileReader = new Scanner(gridFile);
 			int size = fileReader.nextInt();
-			gameGrid = new Grid(size);
+			gameGrid = new Grid(size*size);
 			for(int i = 0; i<size*size;i++) {
 				gameGrid.addTile(new Tile<Integer>(fileReader.nextInt()));
 			}

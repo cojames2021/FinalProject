@@ -37,4 +37,8 @@ public class Tile<T> {
 	public int getOrientation() {
 		return orientation;
 	}
+	public T getValue()
+	{
+		return VALUE;
+	}
 }
