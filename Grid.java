@@ -68,10 +68,13 @@ public class Grid {
 					temp = tileGrid[i][j];
 					tileGrid[i][j] = tileGrid[bottom1-(i-top1)][bottom2-(j-top2)];
 					tileGrid[i][j].changeOrientation();
+					tileGrid[i][j].select(false);
 					tileGrid[bottom1-(i-top1)][bottom2-(j-top2)] = temp;
 					tileGrid[bottom1-(i-top1)][bottom2-(j-top2)].changeOrientation();
+					tileGrid[bottom1-(i-top1)][bottom2-(j-top2)].select(false);
 				}
 			}
+			numberSelected = 0;
 		}
 	}
 	/*private void switchTiles(int tile1, int tile2)			// Previously named "changePosition"
@@ -142,6 +145,18 @@ public class Grid {
 		}
 	}
 	
+	public String toString()
+	{
+		String returnVal = "";
+		for(int i = 0; i < dimensions; i++)
+		{
+			for(int j = 0; j < dimensions; j++)
+			{
+				returnVal+=tileGrid[i][j]
+			}
+		}
+		return "";
+	}
 	
 	// Helper Functions
 	private int coord1(int tile) // Returns the first coordinate of a given position in tileGrid.
