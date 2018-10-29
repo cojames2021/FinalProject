@@ -187,6 +187,15 @@ public class Grid {
 		{
 			fillInRectangle(findTopLeftSelectedTile(),findBottomRightSelectedTile());
 		}
+		else if(numberSelected == 0)
+		{
+			numberSelected++;
+		}
+		else
+		{
+			numberSelected = 0;
+			clear();
+		}
 	}
 	public boolean tileIsSelected(int tile)
 	{
