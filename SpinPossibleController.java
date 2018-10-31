@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JButton;
@@ -15,12 +15,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-public class SpinPossibleController extends JFrame {
+public class SpinPossibleController extends JPanel {
 	private Grid gameGrid;
 	private JFrame gameFrame;
 	private int gridSize;
 	private boolean gameIsReady;
 	private Container gameContentPane;
+	private JPanel panelContainer;
 	private Timer helpTimer;
 	private int helpCounter=0;
 	private JButton helpButton;
@@ -30,8 +31,7 @@ public class SpinPossibleController extends JFrame {
 	private JPanel actionPanel;
 	
 	public static void main(String[] args) {
-		SpinPossibleController myController = new SpinPossibleController("Spin Possible", 50, 50, 800, 800);
-
+		SpinPossibleController myController = new SpinPossibleController("Spin Possible", 50, 50, 1000, 700);
 	}
 	
 	public SpinPossibleController(String title, int gameWindowX, int gameWindowY, int gameWindowWidth, int gameWindowHeight)
@@ -43,7 +43,15 @@ public class SpinPossibleController extends JFrame {
 	        gameContentPane = gameFrame.getContentPane();
 	        gameContentPane.setLayout(null); // not need layout, will use absolute system
 	        gameFrame.setVisible(true);
-	        
+	        actionPanel=new JPanel();
+	        actionPanel.setSize((int)(gameWindowWidth*0.2), gameWindowHeight);
+	        gameFrame.add(actionPanel);
+	        gridPanel = new JPanel();
+	        gridPanel.setSize((int)(gameWindowWidth*0.8), gameWindowHeight);
+	        gameFrame.add(gridPanel);
+	        helpButton = new JButton("Help");
+	        helpButton.setSize((int)(actionPanel.getWidth()*0.5), 50);
+	        actionPanel.add(helpButton);
 	}
 	
 	public void createGrid(int dimensions) {
