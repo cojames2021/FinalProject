@@ -30,7 +30,7 @@ public class SpinPossibleController extends JFrame {
 	private JPanel actionPanel;
 	
 	public static void main(String[] args) {
-		new SpinPossibleController("Spin Possible", 50, 50, 800, 800);
+		SpinPossibleController myController = new SpinPossibleController("Spin Possible", 50, 50, 800, 800);
 
 	}
 	
