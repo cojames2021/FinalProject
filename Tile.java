@@ -2,15 +2,16 @@ package spinPossible;
 
 public class Tile<T> {
 	private final T VALUE;
-	private int orientation = 0;
+	private int orientation;
 	private final int UPSIDE_DOWN = 1;
 	private final int RIGHTSIDE_UP = 0;
-	private boolean selected  = false;
+	private boolean selected;
 	
 	public Tile(T value)
 	{
 		VALUE = value;
-		
+		orientation = RIGHTSIDE_UP;
+		selected = false;
 	}
 	public void select()
 	{
@@ -36,5 +37,9 @@ public class Tile<T> {
 	}
 	public int getOrientation() {
 		return orientation;
+	}
+	public T getValue()
+	{
+		return VALUE;
 	}
 }
