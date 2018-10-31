@@ -38,9 +38,11 @@ public class GridDriver
 			System.out.println("FAILURE - fix grid class.");
 		System.out.println(grid.toString());
 		
-		System.out.print("\nTesting selectTile, selecting two should fill in the rectangle: ");
+		System.out.println("\nTesting selectTile, selecting two should fill in the rectangle...");
 		grid.selectTile(4);
+		System.out.println("Tile 4 selected...");
 		grid.selectTile(32);
+		System.out.println("Tile 32 selected...");
 		testToString = "";
 		for(int i = 0; i < 36; i++)
 		{
@@ -52,6 +54,7 @@ public class GridDriver
 			else
 				testToString = testToString+false+","+0+"\t";
 		}
+		System.out.print("selectTile: ");
 		if(grid.toString().equals(testToString))
 			System.out.println("SUCCESS");
 		else
@@ -78,8 +81,8 @@ public class GridDriver
 		{
 			System.out.println("FAILURE - Check grid class");
 			System.out.println(grid.toString());
-			System.out.println("\n"+testToString);
 		}
+		System.out.println("\n"+testToString);
 	}
 	
 	
