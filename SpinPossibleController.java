@@ -1,6 +1,8 @@
 package spinPossible;
 
 import java.awt.Container;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -12,10 +14,11 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
-public class SpinPossibleController extends JPanel {
+public class SpinPossibleController extends JPanel implements MouseListener{
 	private Grid gameGrid;
 	private JFrame gameFrame;
 	private int gridSize;
@@ -50,9 +53,20 @@ public class SpinPossibleController extends JPanel {
 	        gridPanel = new JPanel();
 	        gridPanel.setSize((int)(gameWindowWidth*0.8), gameWindowHeight);
 	        gameFrame.add(gridPanel);
+	        actionPanel.setLocation((int)(gameWindowWidth*0.8), 0);
 	        helpButton = new JButton("Help");
 	        helpButton.setSize((int)(actionPanel.getWidth()*0.5), 50);
 	        actionPanel.add(helpButton);
+	        String[] sizeList = {"3x3","4x4","5x5"};
+	        sizeBox = new JComboBox<String>(sizeList);
+	        sizeBox.setSize((int)(actionPanel.getWidth()*0.5), 25);
+	        String[] diffList = {"Easy","Medium","Hard"};
+	        difficultyBox = new JComboBox<String>(diffList);
+	        difficultyBox.setSize((int)(actionPanel.getWidth()*0.5), 25);
+	        actionPanel.add(difficultyBox);
+	        actionPanel.add(sizeBox);
+	        sizeBox.setLocation(helpButton.getX(), helpButton.getY()+75);
+	        difficultyBox.setLocation(sizeBox.getX(),sizeBox.getY()+75);
 	}
 	
 	public void createGrid(int dimensions) {
@@ -92,11 +106,39 @@ public class SpinPossibleController extends JPanel {
 		}
 	}
 	
-	private void setGridSize() {
-		
-	}
+
 	
 	private void help() {
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 
