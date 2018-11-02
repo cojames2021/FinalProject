@@ -34,8 +34,7 @@ public class SpinPossibleController extends JPanel implements MouseListener{
 	private JPanel actionPanel;
 	
 	public static void main(String[] args) {
-		new SpinPossibleController("Spin Possible", 50, 50, 1000, 700);
-
+		SpinPossibleController myController = new SpinPossibleController("Spin Possible", 50, 50, 1000, 700);
 	}
 	
 	public SpinPossibleController(String title, int gameWindowX, int gameWindowY, int gameWindowWidth, int gameWindowHeight)
