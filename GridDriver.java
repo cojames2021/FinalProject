@@ -82,7 +82,26 @@ public class GridDriver
 			System.out.println("FAILURE - Check grid class");
 			System.out.println(grid.toString());
 		}
-		System.out.println("\n"+testToString);
+		System.out.println("\n"+testToString+"\n");
+		
+		System.out.println("Testing swapTile method: ");
+		grid.swapTiles(0,35);
+		System.out.println(grid.toString());
+		/*String[] testStringGrid = grid.toString().split("\t");
+		
+		if(testStringGrid[0].equals("35,false,0") && testStringGrid[1].equals("1,false,0"))
+			System.out.println("SUCCESS");
+		else
+		{
+			System.out.println("FAILURE - Check Grid Class");
+			System.out.println(grid.toString());
+		}
+		for(int i = 0; i < testStringGrid.length; i++)
+		{
+			System.out.print(testStringGrid[i]+"\t");
+			if(i%6 == 5)
+				System.out.println("");
+		} // */
 	}
 	
 	

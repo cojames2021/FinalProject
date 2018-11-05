@@ -2,11 +2,16 @@ package spinPossible;
 
 import java.util.Random;
 
-public class Grid {
+import javax.swing.JPanel;
+
+public class Grid extends JPanel {
 	private int numberOfTiles;
 	private int dimensions;
 	private Tile[][] tileGrid;
 	private int numberSelected;
+	private final int MAXIMUM_DIMENSIONS = 6;
+	private final int MINIMUM_DIMENSIONS = 3;
+	private boolean initialized = false;
 	
 /************************************************************************************************************************
 	Visualization of the Grid
@@ -27,10 +32,18 @@ public class Grid {
 	
 	public Grid(int dimensions)
 	{
-		tileGrid = new Tile[dimensions][dimensions];
-		this.dimensions = dimensions;
-		numberOfTiles = 0;
-		numberSelected = 0;
+		if(dimensions > MAXIMUM_DIMENSIONS || dimensions < MINIMUM_DIMENSIONS)
+		{
+			throw new IllegalArgumentException("Grid must be at least 3x3, and no greater than 6x6");
+		}
+		else
+		{
+			tileGrid = new Tile[dimensions][dimensions];
+			this.dimensions = dimensions;
+			numberOfTiles = 0;
+			numberSelected = 0;
+			initialized = true;
+		}
 	}
 	public void rotateRectangle() // Rotates the selected rectangle.
 	{
@@ -82,13 +95,11 @@ public class Grid {
 			numberSelected = 0;
 		}
 	}
-	/*private void switchTiles(int tile1, int tile2)			// Previously named "changePosition"
+	public void swapTiles(int tile1, int tile2)			// Previously named "changePosition"
 	{
-		Tile temp = tile(tile1);
+		Tile temp = getTile(tile1);
 		tileGrid[coord1(tile1)][coord2(tile1)] = tileGrid[coord1(tile2)][coord2(tile2)];
-		tileGrid[coord1(tile1)][coord2(tile1)].changeOrientation();
-		tileGrid[coord1(tile2)][coord2(tile2)] = temp;
-		tileGrid[coord1(tile2)][coord2(tile2)].changeOrientation();
+		tileGrid[coord1(tile2)][coord2(tile2)] = temp; // */
 	}	// */
 	
 	private void fillInRectangle(int topTile, int bottomTile)
@@ -119,6 +130,7 @@ public class Grid {
 	
 	public void addTile(Tile newTile) // Adds a tile to tileGrid. If tileGrid is full, it throws an indexOutOfBounds exception.
 	{
+		checkInitialization();
 		if(numberOfTiles < (dimensions*dimensions)) // If tileGrid is not full
 		{
 			tileGrid[coord1(numberOfTiles)][coord2(numberOfTiles)] = newTile;
@@ -173,6 +185,11 @@ public class Grid {
 	}
 	
 	// Helper Functions
+	private void checkInitialization()
+	{
+		if(!initialized)
+			throw new SecurityException("Grid was not properly initialized");
+	}
 	private int coord1(int tile) // Returns the first coordinate of a given position in tileGrid.
 	{
 		return tile/dimensions;
@@ -211,6 +228,7 @@ public class Grid {
 	}
 	public void selectTile(int tile) // Originally returned the tile found at the given position in tileGrid; now, sets that tile's selected value to the boolean parameter.
 	{
+		checkInitialization();
 		getTile(tile).select(true);
 		if(numberSelected == 1)
 		{

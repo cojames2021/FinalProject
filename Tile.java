@@ -1,11 +1,18 @@
 package spinPossible;
 
-public class Tile<T> {
+import java.awt.Component;
+import java.awt.Rectangle;
+
+import javax.swing.JLabel;
+
+public class Tile<T> extends Component {
 	private final T VALUE;
 	private int orientation;
 	private final int UPSIDE_DOWN = 1;
 	private final int RIGHTSIDE_UP = 0;
 	private boolean selected;
+	private Rectangle GUIShape;
+	private JLabel GUIValue;
 	
 	public Tile(T value)
 	{

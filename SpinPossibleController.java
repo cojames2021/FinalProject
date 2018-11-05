@@ -1,6 +1,8 @@
 package spinPossible;
 
 import java.awt.Container;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -15,7 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-public class SpinPossibleController extends JPanel {
+public class SpinPossibleController extends JPanel implements MouseListener {
 	private Grid gameGrid;
 	private JFrame gameFrame;
 	private int gridSize;
@@ -29,6 +31,30 @@ public class SpinPossibleController extends JPanel {
 	private JComboBox sizeBox;
 	private JPanel gridPanel;
 	private JPanel actionPanel;
+	
+	/**********************************************************************************
+	 * (Initial JOptionPane, probably)
+	 * Welcome to SpinPossible!
+	 * - Play
+	 * - Import Custom Grid
+	 * - Quit
+	 * 
+	 * ("Import Custom Grids")
+	 * JInputDialogue asking for filename, etc >> opens file or errors out back to main menu
+	 * 
+	 * ("Play" Menu)
+	 * 		[easy 4x4]
+	 *  	{Preset Grid}		{Randomly generate a grid}
+	 *  
+	 * 
+	 * (The actual grid)
+	 * 		{ROTATE!!!!!!}
+	 * 		
+	 * 
+	 * [] - dropdown menu
+	 * {} - button
+	 * O - radio button
+	 ********************************************************************************/
 	
 	public static void main(String[] args) {
 		SpinPossibleController myController = new SpinPossibleController("Spin Possible", 50, 50, 1000, 700);
@@ -54,8 +80,13 @@ public class SpinPossibleController extends JPanel {
 	        actionPanel.add(helpButton);
 	}
 	
-	public void createGrid(int dimensions) {
+	public void createGrid(int dimensions, int turns) {
 		gameGrid = new Grid(dimensions);
+		for(int i = 1; i <= dimensions; i++)
+		{
+			gameGrid.addTile(new Tile(i));
+		}
+		gameGrid.randomize(turns);
 	}
 	
 	public void createGrid(String filename)
@@ -96,6 +127,36 @@ public class SpinPossibleController extends JPanel {
 	}
 	
 	private void help() {
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 
