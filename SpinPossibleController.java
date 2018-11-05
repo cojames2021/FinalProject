@@ -14,10 +14,15 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
+<<<<<<< HEAD
 public class SpinPossibleController extends JPanel implements MouseListener {
+=======
+public class SpinPossibleController extends JPanel implements MouseListener{
+>>>>>>> 98928d1b06a7be3812f457913b2a580095c5a896
 	private Grid gameGrid;
 	private JFrame gameFrame;
 	private int gridSize;
@@ -75,9 +80,20 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        gridPanel = new JPanel();
 	        gridPanel.setSize((int)(gameWindowWidth*0.8), gameWindowHeight);
 	        gameFrame.add(gridPanel);
+	        actionPanel.setLocation((int)(gameWindowWidth*0.8), 0);
 	        helpButton = new JButton("Help");
 	        helpButton.setSize((int)(actionPanel.getWidth()*0.5), 50);
 	        actionPanel.add(helpButton);
+	        String[] sizeList = {"3x3","4x4","5x5"};
+	        sizeBox = new JComboBox<String>(sizeList);
+	        sizeBox.setSize((int)(actionPanel.getWidth()*0.5), 25);
+	        String[] diffList = {"Easy","Medium","Hard"};
+	        difficultyBox = new JComboBox<String>(diffList);
+	        difficultyBox.setSize((int)(actionPanel.getWidth()*0.5), 25);
+	        actionPanel.add(difficultyBox);
+	        actionPanel.add(sizeBox);
+	        sizeBox.setLocation(helpButton.getX(), helpButton.getY()+75);
+	        difficultyBox.setLocation(sizeBox.getX(),sizeBox.getY()+75);
 	}
 	
 	public void createGrid(int dimensions, int turns) {
@@ -122,9 +138,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		}
 	}
 	
-	private void setGridSize() {
-		
-	}
+
 	
 	private void help() {
 		
