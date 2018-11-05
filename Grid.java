@@ -47,6 +47,7 @@ public class Grid extends JPanel {
 	}
 	public void rotateRectangle() // Rotates the selected rectangle.
 	{
+		checkInitialization();
 		int top1 = -1;
 		int top2 = -1;
 		int bottom1 = -1;
@@ -97,6 +98,7 @@ public class Grid extends JPanel {
 	}
 	public void swapTiles(int tile1, int tile2)			// Previously named "changePosition"
 	{
+		checkInitialization();
 		Tile temp = getTile(tile1);
 		tileGrid[coord1(tile1)][coord2(tile1)] = tileGrid[coord1(tile2)][coord2(tile2)];
 		tileGrid[coord1(tile2)][coord2(tile2)] = temp; // */
@@ -144,6 +146,7 @@ public class Grid extends JPanel {
 	
 	public void randomize(int turns) // Randomly chooses two tiles for fillRectangle and rotateRectangle. It repeats this process "turns" number of times.
 	{
+		checkInitialization();
 		Random randomTile = new Random();
 		for(int i = 0; i < turns; i++)
 		{
@@ -154,6 +157,7 @@ public class Grid extends JPanel {
 	
 	public void clear() // Deselects all tiles
 	{
+		checkInitialization();
 		for(int i = 0; i < dimensions; i++)
 		{
 			for(int j = 0; j < dimensions; j++)

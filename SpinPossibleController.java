@@ -17,12 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
-<<<<<<< HEAD
 public class SpinPossibleController extends JPanel implements MouseListener {
-=======
-public class SpinPossibleController extends JPanel implements MouseListener{
->>>>>>> 98928d1b06a7be3812f457913b2a580095c5a896
 	private Grid gameGrid;
 	private JFrame gameFrame;
 	private int gridSize;
