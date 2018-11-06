@@ -1,11 +1,61 @@
 package spinPossible;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridLayout;
+
+import javax.swing.JFrame;
+
 public class GridDriver
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws InterruptedException
 	{
-		System.out.println("Testing constructor, initializing grid of size 36");
-		Grid grid = new Grid(6);
+		if(GUITest())
+		{
+			System.out.println("good");
+		}
+		
+		/* // */
+	}
+	
+	public static boolean GUITest() throws InterruptedException
+	{
+		boolean testSuccessful = true;
+		JFrame testFrame = new JFrame();
+		testFrame.setBounds(100, 100, 900, 900);
+		testFrame.setLayout(new BorderLayout());
+		Grid grid = new Grid(3,0,0,900,900);
+		System.out.println("Adding tiles to grid...");
+		Container contentPane = testFrame.getContentPane();
+		contentPane.setLayout(new BorderLayout());
+		contentPane.setBackground(Color.WHITE);
+		contentPane.add(grid,BorderLayout.CENTER);
+		testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		testFrame.setVisible(true);
+		for(int i = 0; i < 9; i++)
+		{
+			Tile temp = new Tile<Integer>(i);
+			grid.addTile(temp);
+		}
+		
+		/*Tile testTile = new Tile<Integer>(1,0,0,100,100);
+		contentPane.add(testTile);
+		for(int i = 0; i < 5; i++)
+		{	
+			testTile.select();
+			Thread.sleep(1000);
+		}//*/
+		
+		
+		return testSuccessful;
+	}
+	
+	public static boolean methodsTest()
+	{
+		boolean testSuccessful = true;
+		/*System.out.println("Testing constructor, initializing grid of size 36");
+		Grid grid = new Grid(6,0,0,1600,900);
 		System.out.println("Adding tiles to grid...");
 		for(int i = 0; i < 36; i++)
 		{
@@ -17,6 +67,7 @@ public class GridDriver
 		{
 			grid.addTile(new Tile(36));
 			System.out.println("FAILURE - fix grid class.");
+			testSuccessful = false;
 		}
 		catch(IndexOutOfBoundsException i)
 		{
@@ -35,7 +86,9 @@ public class GridDriver
 		if(grid.toString().equals(testToString))
 			System.out.println("SUCCESS");
 		else
-			System.out.println("FAILURE - fix grid class.");
+		{	System.out.println("FAILURE - fix grid class.");
+			testSuccessful = false;
+		}
 		System.out.println(grid.toString());
 		
 		System.out.println("\nTesting selectTile, selecting two should fill in the rectangle...");
@@ -62,6 +115,7 @@ public class GridDriver
 			System.out.println("FAILURE - Check grid class");
 			System.out.println("\n"+grid.toString()+"\n");
 			System.out.println(testToString);
+			testSuccessful = false;
 		}
 		System.out.print("Testing rotateRectangle method: ");
 		testToString = "";
@@ -81,6 +135,7 @@ public class GridDriver
 		{
 			System.out.println("FAILURE - Check grid class");
 			System.out.println(grid.toString());
+			testSuccessful = false;
 		}
 		System.out.println("\n"+testToString+"\n");
 		
@@ -102,8 +157,6 @@ public class GridDriver
 			if(i%6 == 5)
 				System.out.println("");
 		} // */
+		return testSuccessful;
 	}
-	
-	
-	
 }

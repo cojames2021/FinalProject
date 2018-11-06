@@ -1,5 +1,8 @@
 package spinPossible;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.util.Random;
 
 import javax.swing.JPanel;
@@ -30,7 +33,7 @@ public class Grid extends JPanel {
 	
 	
 	
-	public Grid(int dimensions)
+	public Grid(int dimensions, int panelX, int panelY, int panelWidth, int panelHeight)
 	{
 		if(dimensions > MAXIMUM_DIMENSIONS || dimensions < MINIMUM_DIMENSIONS)
 		{
@@ -42,6 +45,8 @@ public class Grid extends JPanel {
 			this.dimensions = dimensions;
 			numberOfTiles = 0;
 			numberSelected = 0;
+			this.setBounds(panelX, panelY, panelWidth, panelHeight);
+			this.setLayout(new GridBagLayout());
 			initialized = true;
 		}
 	}
@@ -135,8 +140,14 @@ public class Grid extends JPanel {
 		checkInitialization();
 		if(numberOfTiles < (dimensions*dimensions)) // If tileGrid is not full
 		{
+			GridBagConstraints constraints = new GridBagConstraints();
+			constraints.gridx = coord1(numberOfTiles);
+			constraints.gridy = coord2(numberOfTiles);
+			constraints.fill = GridBagConstraints.BOTH;
 			tileGrid[coord1(numberOfTiles)][coord2(numberOfTiles)] = newTile;
 			numberOfTiles++;
+			this.add(newTile, constraints);
+			newTile.setTileVisible(true);
 		}
 		else // tileGrid is full
 		{
