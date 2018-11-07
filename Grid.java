@@ -148,11 +148,13 @@ public class Grid extends JPanel {
 			constraints.gridy = coord1(numberOfTiles);
 			//constraints.gridwidth = GridBagConstraints.REMAINDER;
 			//constraints.gridheight = GridBagConstraints.REMAINDER;
-			constraints.fill = GridBagConstraints.BOTH;
+			//constraints.fill = GridBagConstraints.BOTH;
 			tileGrid[coord1(numberOfTiles)][coord2(numberOfTiles)] = newTile;
 			numberOfTiles++;
 			this.add(newTile, constraints);
 			newTile.setTileVisible(true);
+			if(numberOfTiles < (dimensions*dimensions))
+				initialized = true;
 		}
 		else // tileGrid is full
 		{
