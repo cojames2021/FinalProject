@@ -3,6 +3,7 @@ package spinPossible;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JFrame;
@@ -25,20 +26,27 @@ public class GridDriver
 		JFrame testFrame = new JFrame();
 		testFrame.setBounds(100, 100, 900, 900);
 		testFrame.setLayout(new BorderLayout());
-		Grid grid = new Grid(3,0,0,900,900);
 		System.out.println("Adding tiles to grid...");
 		Container contentPane = testFrame.getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.setBackground(Color.WHITE);
-		contentPane.add(grid,BorderLayout.CENTER);
+		Grid grid = new Grid(6,contentPane);
 		testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		testFrame.setVisible(true);
-		for(int i = 0; i < 9; i++)
+		for(int i = 1; i <= 36; i++)
 		{
-			Tile temp = new Tile<Integer>(i);
+			Tile temp = new Tile<Integer>(i, new Dimension(900/6,900/6));
 			grid.addTile(temp);
 		}
-		
+		for(int i = 0; i < 100; i++)
+		{
+			grid.selectTile(0);
+			Thread.sleep(1000);
+			grid.selectTile(20);
+			Thread.sleep(1000);
+			grid.rotateRectangle();
+			Thread.sleep(5000);
+		}
 		/*Tile testTile = new Tile<Integer>(1,0,0,100,100);
 		contentPane.add(testTile);
 		for(int i = 0; i < 5; i++)

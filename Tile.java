@@ -2,8 +2,10 @@ package spinPossible;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
@@ -21,7 +23,7 @@ public class Tile<T> extends JPanel {
 	private final Color SELECTED_COLOR = new Color(255,255,200);
 	private JLabel valueText;
 	
-	public Tile(T value/*, int x, int y, int width, int height*/)
+	public Tile(T value/*, int x, int y, int width, int height*/, Dimension size)
 	{
 		VALUE = value;
 		orientation = RIGHTSIDE_UP;
@@ -33,9 +35,11 @@ public class Tile<T> extends JPanel {
 		valueText.setVerticalAlignment(JLabel.CENTER);
 		valueText.setFont(valueText.getFont().deriveFont(60.0f));
 		this.setBackground(DEFAULT_COLOR);
-		//this.setOpaque(true);
 		setBorder(new LineBorder(Color.BLACK));
 		this.add(valueText,BorderLayout.CENTER);
+		this.setPreferredSize(size);
+		this.setMinimumSize(size);
+		this.setMaximumSize(size);
 		
 	}
 	public void setTileVisible(boolean visible)
