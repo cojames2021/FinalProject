@@ -64,7 +64,7 @@ public class SpinPossibleController extends JPanel implements MouseListener{
 	        playButton.setSize((int)(actionPanel.getWidth()*0.5), 50);
 	        actionPanel.add(playButton);
 	        playButton.setLocation(0, 5);
-	        String[] sizeList = {"3x3","4x4","5x5"};
+	        String[] sizeList = {"3x3","4x4","5x5","6x6"};
 	        sizeBox = new JComboBox<String>(sizeList);
 	        sizeBox.setSize((int)(actionPanel.getWidth()*0.5), 25);
 	        String[] diffList = {"Easy","Medium","Hard"};
@@ -72,7 +72,7 @@ public class SpinPossibleController extends JPanel implements MouseListener{
 	        difficultyBox.setSize((int)(actionPanel.getWidth()*0.5), 25);
 	        actionPanel.add(difficultyBox);
 	        actionPanel.add(sizeBox);
-	        sizeBox.setLocation(playButton.getX(), playButton.getY()+100);
+	        sizeBox.setLocation(playButton.getX(), playButton.getY()+75);
 	        difficultyBox.setLocation(sizeBox.getX(),sizeBox.getY()+75);
 	        difficulty = new JLabel("Game Difficulty:");
 	        sizeLabel = new JLabel("Grid Size:");
