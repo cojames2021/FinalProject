@@ -1,6 +1,6 @@
 package spinPossible;
 
-import java.awt.Color;
+
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -49,7 +49,6 @@ public class Grid extends JPanel {
 			numberSelected = 0;
 			this.setLayout(new GridBagLayout());
 			gridPanel.add(this);
-			this.setBackground(Color.GREEN);
 			initialized = true;
 		}
 	}

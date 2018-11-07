@@ -24,7 +24,7 @@ public class GridDriver
 	{
 		boolean testSuccessful = true;
 		JFrame testFrame = new JFrame();
-		testFrame.setBounds(100, 100, 900, 900);
+		testFrame.setBounds(100, 100, 800, 800);
 		testFrame.setLayout(new BorderLayout());
 		System.out.println("Adding tiles to grid...");
 		Container contentPane = testFrame.getContentPane();
@@ -35,18 +35,10 @@ public class GridDriver
 		testFrame.setVisible(true);
 		for(int i = 1; i <= 36; i++)
 		{
-			Tile temp = new Tile<Integer>(i, new Dimension(900/6,900/6));
+			Tile temp = new Tile<Integer>(i, new Dimension(600/6,600/6));
 			grid.addTile(temp);
 		}
-		for(int i = 0; i < 100; i++)
-		{
-			grid.selectTile(0);
-			Thread.sleep(1000);
-			grid.selectTile(20);
-			Thread.sleep(1000);
-			grid.rotateRectangle();
-			Thread.sleep(5000);
-		}
+		
 		/*Tile testTile = new Tile<Integer>(1,0,0,100,100);
 		contentPane.add(testTile);
 		for(int i = 0; i < 5; i++)

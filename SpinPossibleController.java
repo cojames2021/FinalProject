@@ -73,21 +73,21 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        gameFrame.setLocation(gameWindowX, gameWindowY);
 	        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        gameContentPane = gameFrame.getContentPane();
-	        gameContentPane.setLayout(null); // not need layout, will use absolute system
+	        gameContentPane.setLayout(new BorderLayout()); // not need layout, will use absolute system
 	        gameFrame.setVisible(true);
 	        actionPanel=new JPanel();
 	        actionPanel.setSize((int)(gameWindowWidth*0.2), gameWindowHeight);
-	        gameFrame.add(actionPanel);
+	        gameFrame.add(actionPanel, BorderLayout.EAST);
 	        gridPanel = new JPanel();
 	        gridPanel.setSize((int)(gameWindowWidth*0.8), gameWindowHeight);
 	        gameFrame.add(gridPanel);
-	        actionPanel.setLocation((int)(gameWindowWidth*0.8), 0);
+	        //actionPanel.setLocation((int)(gameWindowWidth*0.8), 0);
 	        actionPanel.setBackground(Color.green);
 	        playButton = new JButton("Play");
 	        playButton.setSize((int)(actionPanel.getWidth()*0.5), 50);
 	        actionPanel.add(playButton);
 	        playButton.setLocation(0, 5);
-	        String[] sizeList = {"3x3","4x4","5x5"};
+	        String[] sizeList = {"3x3","4x4","5x5","6x6"};
 	        sizeBox = new JComboBox<String>(sizeList);
 	        sizeBox.setSize((int)(actionPanel.getWidth()*0.5), 25);
 	        String[] diffList = {"Easy","Medium","Hard"};
@@ -95,7 +95,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        difficultyBox.setSize((int)(actionPanel.getWidth()*0.5), 25);
 	        actionPanel.add(difficultyBox);
 	        actionPanel.add(sizeBox);
-	        sizeBox.setLocation(playButton.getX(), playButton.getY()+100);
+	        sizeBox.setLocation(playButton.getX(), playButton.getY()+75);
 	        difficultyBox.setLocation(sizeBox.getX(),sizeBox.getY()+75);
 	        difficulty = new JLabel("Game Difficulty:");
 	        sizeLabel = new JLabel("Grid Size:");
@@ -105,10 +105,10 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	}
 	
 	public void createGrid(int dimensions, int turns) {
-		gameGrid = new Grid(dimensions);
+		gameGrid = new Grid(dimensions, gridPanel);
 		for(int i = 1; i <= dimensions; i++)
 		{
-			gameGrid.addTile(new Tile(i));
+			gameGrid.addTile(new Tile<Integer>(i, gridPanel.getSize()));
 		}
 		gameGrid.randomize(turns);
 	}
@@ -135,9 +135,9 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		try {
 			Scanner fileReader = new Scanner(gridFile);
 			int size = fileReader.nextInt();
-			gameGrid = new Grid(size*size);
+			gameGrid = new Grid(size*size, gridPanel);
 			for(int i = 0; i<size*size;i++) {
-				gameGrid.addTile(new Tile<Integer>(fileReader.nextInt()));
+				gameGrid.addTile(new Tile<Integer>(fileReader.nextInt(), gridPanel.getSize()));
 			}
 			fileReader.close();
 		} 
