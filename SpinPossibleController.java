@@ -18,8 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
-public class SpinPossibleController extends JPanel implements MouseListener{
+public class SpinPossibleController extends JPanel implements MouseListener {
 	private Grid gameGrid;
 	private JFrame gameFrame;
 	private int gridSize;
@@ -38,6 +37,30 @@ public class SpinPossibleController extends JPanel implements MouseListener{
 	private JLabel sizeLabel;
 	private JPanel gridPanel;
 	private JPanel actionPanel;
+	
+	/**********************************************************************************
+	 * (Initial JOptionPane, probably)
+	 * Welcome to SpinPossible!
+	 * - Play
+	 * - Import Custom Grid
+	 * - Quit
+	 * 
+	 * ("Import Custom Grids")
+	 * JInputDialogue asking for filename, etc >> opens file or errors out back to main menu
+	 * 
+	 * ("Play" Menu)
+	 * 		[easy 4x4]
+	 *  	{Preset Grid}		{Randomly generate a grid}
+	 *  
+	 * 
+	 * (The actual grid)
+	 * 		{ROTATE!!!!!!}
+	 * 		
+	 * 
+	 * [] - dropdown menu
+	 * {} - button
+	 * O - radio button
+	 ********************************************************************************/
 	
 	public static void main(String[] args) {
 		SpinPossibleController myController = new SpinPossibleController("Spin Possible", 50, 50, 1000, 700);
@@ -81,8 +104,13 @@ public class SpinPossibleController extends JPanel implements MouseListener{
 	        sizeLabel.setLocation(sizeBox.getX(), sizeBox.getY()-10);
 	}
 	
-	public void createGrid(int dimensions) {
+	public void createGrid(int dimensions, int turns) {
 		gameGrid = new Grid(dimensions);
+		for(int i = 1; i <= dimensions; i++)
+		{
+			gameGrid.addTile(new Tile(i));
+		}
+		gameGrid.randomize(turns);
 	}
 	
 	public void createGrid(String filename)
