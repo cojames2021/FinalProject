@@ -25,17 +25,17 @@ public class GridDriver
 		JFrame testFrame = new JFrame();
 		testFrame.setBounds(100, 100, 900, 900);
 		testFrame.setLayout(new BorderLayout());
-		Grid grid = new Grid(3,0,0,900,900);
 		System.out.println("Adding tiles to grid...");
 		Container contentPane = testFrame.getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.setBackground(Color.WHITE);
+		Grid grid = new Grid(5, contentPane);
 		contentPane.add(grid,BorderLayout.CENTER);
 		testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		testFrame.setVisible(true);
-		for(int i = 0; i < 9; i++)
+		for(int i = 0; i < 25; i++)
 		{
-			Tile temp = new Tile<Integer>(i);
+			Tile temp = new Tile<Integer>(i+1);
 			grid.addTile(temp);
 		}
 		

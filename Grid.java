@@ -1,5 +1,6 @@
 package spinPossible;
 
+import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -33,7 +34,7 @@ public class Grid extends JPanel {
 	
 	
 	
-	public Grid(int dimensions, int panelX, int panelY, int panelWidth, int panelHeight)
+	public Grid(int dimensions, Container gridPanel)
 	{
 		if(dimensions > MAXIMUM_DIMENSIONS || dimensions < MINIMUM_DIMENSIONS)
 		{
@@ -45,8 +46,8 @@ public class Grid extends JPanel {
 			this.dimensions = dimensions;
 			numberOfTiles = 0;
 			numberSelected = 0;
-			this.setBounds(panelX, panelY, panelWidth, panelHeight);
 			this.setLayout(new GridBagLayout());
+			gridPanel.add(this);
 			initialized = true;
 		}
 	}
@@ -143,7 +144,7 @@ public class Grid extends JPanel {
 			GridBagConstraints constraints = new GridBagConstraints();
 			constraints.gridx = coord2(numberOfTiles);
 			constraints.gridy = coord1(numberOfTiles);
-			constraints.fill = GridBagConstraints.BOTH;
+			//constraints.fill = GridBagConstraints.BOTH;
 			tileGrid[coord1(numberOfTiles)][coord2(numberOfTiles)] = newTile;
 			numberOfTiles++;
 			this.add(newTile, constraints);

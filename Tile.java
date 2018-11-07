@@ -32,11 +32,13 @@ public class Tile<T> extends JPanel {
 		valueText.setHorizontalAlignment(JLabel.CENTER);
 		valueText.setVerticalAlignment(JLabel.CENTER);
 		valueText.setFont(valueText.getFont().deriveFont(60.0f));
+		valueText.setSize(50, 50);;
 		this.setBackground(DEFAULT_COLOR);
 		//this.setOpaque(true);
 		setBorder(new LineBorder(Color.BLACK));
 		this.add(valueText,BorderLayout.CENTER);
-		
+		this.setPreferredSize(new Dimension(300,300));
+		this.setMinimumSize(new Dimension(300,300));
 	}
 	public void setTileVisible(boolean visible)
 	{
