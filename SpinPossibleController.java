@@ -73,15 +73,15 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        gameFrame.setLocation(gameWindowX, gameWindowY);
 	        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        gameContentPane = gameFrame.getContentPane();
-	        gameContentPane.setLayout(null); // not need layout, will use absolute system
+	        gameContentPane.setLayout(new BorderLayout()); // not need layout, will use absolute system
 	        gameFrame.setVisible(true);
 	        actionPanel=new JPanel();
 	        actionPanel.setSize((int)(gameWindowWidth*0.2), gameWindowHeight);
-	        gameFrame.add(actionPanel);
+	        gameFrame.add(actionPanel, BorderLayout.EAST);
 	        gridPanel = new JPanel();
 	        gridPanel.setSize((int)(gameWindowWidth*0.8), gameWindowHeight);
 	        gameFrame.add(gridPanel);
-	        actionPanel.setLocation((int)(gameWindowWidth*0.8), 0);
+	        //actionPanel.setLocation((int)(gameWindowWidth*0.8), 0);
 	        actionPanel.setBackground(Color.green);
 	        playButton = new JButton("Play");
 	        playButton.setSize((int)(actionPanel.getWidth()*0.5), 50);
@@ -108,7 +108,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		gameGrid = new Grid(dimensions, gridPanel);
 		for(int i = 1; i <= dimensions; i++)
 		{
-			gameGrid.addTile(new Tile(i));
+			gameGrid.addTile(new Tile<Integer>(i, gridPanel.getSize()));
 		}
 		gameGrid.randomize(turns);
 	}
@@ -137,7 +137,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			int size = fileReader.nextInt();
 			gameGrid = new Grid(size*size, gridPanel);
 			for(int i = 0; i<size*size;i++) {
-				gameGrid.addTile(new Tile<Integer>(fileReader.nextInt()));
+				gameGrid.addTile(new Tile<Integer>(fileReader.nextInt(), gridPanel.getSize()));
 			}
 			fileReader.close();
 		} 
