@@ -76,17 +76,18 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        
 	        actionPanel=new JPanel();
 	        actionPanel.setLayout(new BorderLayout());
-	        actionPanel.setSize(gameWindowWidth,(int)(gameWindowHeight*0.15));
+	        actionPanel.setSize(gameWindowWidth,(int)(gameWindowHeight*0.05));
 	        gameFrame.add(actionPanel, BorderLayout.CENTER);
 	        
 	        gridPanel = new JPanel();
-	        gridPanel.setSize(gameWindowWidth, (int)(gameWindowHeight*0.85));
+	        gridPanel.setSize(gameWindowWidth, (int)(gameWindowHeight*0.95));
 	        gameFrame.add(gridPanel, BorderLayout.CENTER);
 	        actionPanel.setBackground(Color.green);
 	        gridPanel.setBackground(Color.blue);
 	        
 	        playButton = new JButton("Play");
 	        playButton.setSize(75, 25);
+	        playButton.setLocation(10, 5);
 	        actionPanel.add(playButton);
 	        
 	        String[] sizeList = {"3x3","4x4","5x5","6x6"};
