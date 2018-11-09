@@ -33,8 +33,6 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private JButton rulesButton;
 	private JComboBox difficultyBox;
 	private JComboBox sizeBox;
-	private JLabel difficulty;
-	private JLabel sizeLabel;
 	private JPanel gridPanel;
 	private JPanel actionPanel;
 	
@@ -75,33 +73,37 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        gameContentPane = gameFrame.getContentPane();
 	        gameContentPane.setLayout(new BorderLayout()); // not need layout, will use absolute system
 	        gameFrame.setVisible(true);
+	        
 	        actionPanel=new JPanel();
-	        actionPanel.setSize((int)(gameWindowWidth*0.2), gameWindowHeight);
-	        gameFrame.add(actionPanel, BorderLayout.EAST);
+	        actionPanel.setLayout(new BorderLayout());
+	        actionPanel.setSize(gameWindowWidth,(int)(gameWindowHeight*0.15));
+	        gameFrame.add(actionPanel, BorderLayout.CENTER);
+	        
 	        gridPanel = new JPanel();
-	        gridPanel.setSize((int)(gameWindowWidth*0.8), gameWindowHeight);
-	        gameFrame.add(gridPanel);
-	        //actionPanel.setLocation((int)(gameWindowWidth*0.8), 0);
+	        gridPanel.setSize(gameWindowWidth, (int)(gameWindowHeight*0.85));
+	        gameFrame.add(gridPanel, BorderLayout.CENTER);
 	        actionPanel.setBackground(Color.green);
+	        gridPanel.setBackground(Color.blue);
+	        
 	        playButton = new JButton("Play");
-	        playButton.setSize((int)(actionPanel.getWidth()*0.5), 50);
+	        playButton.setSize(75, 25);
 	        actionPanel.add(playButton);
-	        playButton.setLocation(0, 5);
+	        
 	        String[] sizeList = {"3x3","4x4","5x5","6x6"};
 	        sizeBox = new JComboBox<String>(sizeList);
-	        sizeBox.setSize((int)(actionPanel.getWidth()*0.5), 25);
+	        sizeBox.setSize(75, 25);
+	        sizeBox.setAlignmentX(playButton.getAlignmentX()+20);
+	        
 	        String[] diffList = {"Easy","Medium","Hard"};
 	        difficultyBox = new JComboBox<String>(diffList);
-	        difficultyBox.setSize((int)(actionPanel.getWidth()*0.5), 25);
+	        difficultyBox.setSize(75, 25);
+	        difficultyBox.setAlignmentX(sizeBox.getAlignmentX()+20);
+	        
 	        actionPanel.add(difficultyBox);
 	        actionPanel.add(sizeBox);
-	        sizeBox.setLocation(playButton.getX(), playButton.getY()+75);
-	        difficultyBox.setLocation(sizeBox.getX(),sizeBox.getY()+75);
-	        difficulty = new JLabel("Game Difficulty:");
-	        sizeLabel = new JLabel("Grid Size:");
-	        actionPanel.add(sizeLabel);
-	        actionPanel.add(difficulty);
-	        sizeLabel.setLocation(sizeBox.getX(), sizeBox.getY()-10);
+	        sizeBox.setLocation(playButton.getX()+100, playButton.getY());
+	        difficultyBox.setLocation(sizeBox.getX()+100,sizeBox.getY());
+
 	}
 	
 	public void createGrid(int dimensions, int turns) {
