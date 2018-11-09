@@ -1,6 +1,7 @@
 package spinPossible;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -27,12 +28,16 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private JPanel panelContainer;
 	private Timer helpTimer;
 	private int helpCounter=0;
+	
 	private JButton playButton;
 	private JButton helpButton;
 	private JButton clearButton;
 	private JButton rulesButton;
+	private JButton finishedButton;
+	
 	private JComboBox difficultyBox;
 	private JComboBox sizeBox;
+	
 	private JPanel gridPanel;
 	private JPanel actionPanel;
 	
@@ -75,7 +80,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        gameFrame.setVisible(true);
 	        
 	        actionPanel=new JPanel();
-	        actionPanel.setLayout(new BorderLayout());
+	        actionPanel.setLayout(null);
 	        actionPanel.setSize(gameWindowWidth,(int)(gameWindowHeight*0.05));
 	        gameFrame.add(actionPanel, BorderLayout.CENTER);
 	        
@@ -104,6 +109,20 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        actionPanel.add(sizeBox);
 	        sizeBox.setLocation(playButton.getX()+100, playButton.getY());
 	        difficultyBox.setLocation(sizeBox.getX()+100,sizeBox.getY());
+	        
+	        helpButton = new JButton("Help");
+	        rulesButton = new JButton("Rules");
+	        finishedButton = new JButton("Finished");
+	        actionPanel.add(helpButton);
+	        actionPanel.add(rulesButton);
+	        actionPanel.add(finishedButton);
+	        finishedButton.setLocation(difficultyBox.getX()+100, playButton.getY());
+	        helpButton.setLocation(finishedButton.getX()+125, playButton.getY());
+	        rulesButton.setLocation(helpButton.getX()+100, playButton.getY());
+	        finishedButton.setSize(100, 25);
+	        rulesButton.setSize(75, 25);
+	        helpButton.setSize(75,25);
+
 
 	}
 	
