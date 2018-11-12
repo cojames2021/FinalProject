@@ -122,15 +122,15 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        finishedButton.setSize(100, 25);
 	        rulesButton.setSize(75, 25);
 	        helpButton.setSize(75,25);
-
-
+	        
+	        createGrid(4,0);  
 	}
 	
 	public void createGrid(int dimensions, int turns) {
 		gameGrid = new Grid(dimensions, gridPanel);
 		for(int i = 1; i <= dimensions; i++)
 		{
-			gameGrid.addTile(new Tile<Integer>(i, gridPanel.getSize()));
+			gameGrid.addTile(i);
 		}
 		gameGrid.randomize(turns);
 	}
@@ -158,8 +158,9 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			Scanner fileReader = new Scanner(gridFile);
 			int size = fileReader.nextInt();
 			gameGrid = new Grid(size*size, gridPanel);
-			for(int i = 0; i<size*size;i++) {
-				gameGrid.addTile(new Tile<Integer>(fileReader.nextInt(), gridPanel.getSize()));
+			for(int i = 0; i<size*size;i++) 
+			{
+				gameGrid.addTile(fileReader.nextInt());
 			}
 			fileReader.close();
 		} 

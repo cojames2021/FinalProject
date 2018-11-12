@@ -35,8 +35,8 @@ public class GridDriver
 		testFrame.setVisible(true);
 		for(int i = 1; i <= 36; i++)
 		{
-			Tile temp = new Tile<Integer>(i, new Dimension(600/6,600/6));
-			grid.addTile(temp);
+			//Tile temp = new Tile<Integer>(i, new Dimension(600/6,600/6));
+			grid.addTile(i);
 		}
 		
 		/*Tile testTile = new Tile<Integer>(1,0,0,100,100);
