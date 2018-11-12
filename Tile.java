@@ -23,7 +23,7 @@ public class Tile<T> extends JPanel {
 	private final Color SELECTED_COLOR = new Color(255,255,200);
 	private JLabel valueText;
 	
-	public Tile(T value/*, int x, int y, int width, int height*/, Dimension size)
+	public Tile(T value, Dimension size)
 	{
 		VALUE = value;
 		orientation = RIGHTSIDE_UP;

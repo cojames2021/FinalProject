@@ -28,12 +28,16 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private JPanel panelContainer;
 	private Timer helpTimer;
 	private int helpCounter=0;
+	
 	private JButton playButton;
 	private JButton helpButton;
 	private JButton clearButton;
 	private JButton rulesButton;
+	private JButton finishedButton;
+	
 	private JComboBox difficultyBox;
 	private JComboBox sizeBox;
+	
 	private JPanel gridPanel;
 	private JPanel actionPanel;
 	
@@ -105,14 +109,28 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        actionPanel.add(sizeBox);
 	        sizeBox.setLocation(playButton.getX()+100, playButton.getY());
 	        difficultyBox.setLocation(sizeBox.getX()+100,sizeBox.getY());
-
+	        
+	        helpButton = new JButton("Help");
+	        rulesButton = new JButton("Rules");
+	        finishedButton = new JButton("Finished");
+	        actionPanel.add(helpButton);
+	        actionPanel.add(rulesButton);
+	        actionPanel.add(finishedButton);
+	        finishedButton.setLocation(difficultyBox.getX()+100, playButton.getY());
+	        helpButton.setLocation(finishedButton.getX()+125, playButton.getY());
+	        rulesButton.setLocation(helpButton.getX()+100, playButton.getY());
+	        finishedButton.setSize(100, 25);
+	        rulesButton.setSize(75, 25);
+	        helpButton.setSize(75,25);
+	        
+	        createGrid(4,0);  
 	}
 	
 	public void createGrid(int dimensions, int turns) {
 		gameGrid = new Grid(dimensions, gridPanel);
 		for(int i = 1; i <= dimensions; i++)
 		{
-			gameGrid.addTile(new Tile<Integer>(i, gridPanel.getSize()));
+			gameGrid.addTile(i);
 		}
 		gameGrid.randomize(turns);
 	}
@@ -140,8 +158,9 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			Scanner fileReader = new Scanner(gridFile);
 			int size = fileReader.nextInt();
 			gameGrid = new Grid(size*size, gridPanel);
-			for(int i = 0; i<size*size;i++) {
-				gameGrid.addTile(new Tile<Integer>(fileReader.nextInt(), gridPanel.getSize()));
+			for(int i = 0; i<size*size;i++) 
+			{
+				gameGrid.addTile(fileReader.nextInt());
 			}
 			fileReader.close();
 		} 
