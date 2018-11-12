@@ -50,8 +50,7 @@ public class Grid extends JPanel {
 			numberSelected = 0;
 			this.setLayout(new GridBagLayout());
 			gridPanel.add(this);
-			this.setSize(gridPanel.getSize());
-			System.out.println(this.getHeight()+" "+gridPanel.getHeight());
+			this.setSize(new Dimension(gridPanel.getWidth(),gridPanel.getHeight()));
 			initialized = true;
 		}
 	}

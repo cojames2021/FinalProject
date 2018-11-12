@@ -76,20 +76,19 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        gameFrame.setLocation(gameWindowX, gameWindowY);
 	        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        gameContentPane = gameFrame.getContentPane();
-	        gameContentPane.setLayout(new BorderLayout()); // not need layout, will use absolute system
+	        gameContentPane.setLayout(null); // not need layout, will use absolute system
 	        gameFrame.setVisible(true);
 	        
 	        actionPanel=new JPanel();
 	        actionPanel.setLayout(null);
 	        actionPanel.setSize(gameWindowWidth,(int)(gameWindowHeight*0.05));
-	        gameFrame.add(actionPanel, BorderLayout.CENTER);
+	        gameFrame.add(actionPanel);
 	        
 	        gridPanel = new JPanel();
 	        gridPanel.setSize(gameWindowWidth, (int)(gameWindowHeight*0.95));
-	        gameFrame.add(gridPanel, BorderLayout.CENTER);
-	        actionPanel.setBackground(Color.green);
-	        gridPanel.setBackground(Color.blue);
-	        
+	        gridPanel.setLocation(0, 0+actionPanel.getHeight());
+	        gameFrame.add(gridPanel);
+	    
 	        playButton = new JButton("Play");
 	        playButton.setSize(75, 25);
 	        playButton.setLocation(10, 5);
@@ -123,7 +122,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        rulesButton.setSize(75, 25);
 	        helpButton.setSize(75,25);
 	        
-	        createGrid(4,0);  
+	        createGrid(6,0);  
 	}
 	
 	public void createGrid(int dimensions, int turns) {
