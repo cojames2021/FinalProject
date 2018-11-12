@@ -1,6 +1,7 @@
 package spinPossible;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -75,7 +76,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        gameFrame.setVisible(true);
 	        
 	        actionPanel=new JPanel();
-	        actionPanel.setLayout(new BorderLayout());
+	        actionPanel.setLayout(null);
 	        actionPanel.setSize(gameWindowWidth,(int)(gameWindowHeight*0.05));
 	        gameFrame.add(actionPanel, BorderLayout.CENTER);
 	        

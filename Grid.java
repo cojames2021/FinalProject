@@ -93,6 +93,7 @@ public class Grid extends JPanel {
 				{
 					temp = tileGrid[i][j];
 					tileGrid[i][j] = tileGrid[bottom1-(i-top1)][bottom2-(j-top2)];
+					//this.toBeContinued(YES Roundabout);
 					tileGrid[i][j].changeOrientation();
 					tileGrid[i][j].select(false);
 					tileGrid[bottom1-(i-top1)][bottom2-(j-top2)] = temp;
