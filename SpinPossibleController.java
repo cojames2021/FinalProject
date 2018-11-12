@@ -128,7 +128,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	
 	public void createGrid(int dimensions, int turns) {
 		gameGrid = new Grid(dimensions, gridPanel);
-		for(int i = 1; i <= dimensions; i++)
+		for(int i = 1; i <= dimensions*dimensions; i++)
 		{
 			gameGrid.addTile(i);
 		}

@@ -39,11 +39,11 @@ public class GridDriver
 			grid.addTile(i);
 		}
 		
-		/*Tile testTile = new Tile<Integer>(1,0,0,100,100);
-		contentPane.add(testTile);
+		/*//Tile testTile = new Tile<Integer>(1,0,0,100,100);
+		//contentPane.add(testTile);
 		for(int i = 0; i < 5; i++)
 		{	
-			testTile.select();
+			grid;
 			Thread.sleep(1000);
 		}//*/
 		

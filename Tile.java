@@ -7,6 +7,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.font.TextAttribute;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -33,7 +36,9 @@ public class Tile<T> extends JPanel {
 		valueText = new JLabel(value.toString());
 		valueText.setHorizontalAlignment(JLabel.CENTER);
 		valueText.setVerticalAlignment(JLabel.CENTER);
-		valueText.setFont(valueText.getFont().deriveFont(60.0f));
+		Map<TextAttribute, Integer> underlineAttribute = new HashMap<TextAttribute, Integer>(); // Underlined text. Source: https://stackoverflow.com/questions/325840/what-is-the-constant-value-of-the-underline-font-in-java
+		underlineAttribute.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		valueText.setFont(valueText.getFont().deriveFont(60.0f).deriveFont(underlineAttribute));
 		valueText.setSize(50, 50);;
 		this.setBackground(DEFAULT_COLOR);
 		setBorder(new LineBorder(Color.BLACK));
