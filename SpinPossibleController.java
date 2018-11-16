@@ -2,6 +2,8 @@ package spinPossible;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -28,7 +30,13 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private JPanel panelContainer;
 	private Timer helpTimer;
 	private int helpCounter=0;
-	
+	private Tile<Integer>[][] grid;
+	private final int HARD_ROTATION = 35;
+	private final int MEDIUM_ROTATION = 24;
+	private final int EASY_ROTATION = 10;
+	private int topLeftX;
+	private int topLeftY;
+
 	private JButton playButton;
 	private JButton helpButton;
 	private JButton clearButton;
@@ -86,7 +94,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        
 	        gridPanel = new JPanel();
 	        gridPanel.setSize(gameWindowWidth, (int)(gameWindowHeight*0.95));
-	        gridPanel.setLocation(0, 0+actionPanel.getHeight());
+	        gridPanel.setLocation(actionPanel.getX()-5, actionPanel.getHeight());
 	        gameFrame.add(gridPanel);
 	    
 	        playButton = new JButton("Play");
@@ -121,8 +129,38 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        finishedButton.setSize(100, 25);
 	        rulesButton.setSize(75, 25);
 	        helpButton.setSize(75,25);
-	        
-	        createGrid(6,0);  
+	         
+	        gameFrame.addMouseListener(this);
+	        playButton.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		gridPanel.removeAll();
+	        		int size;
+	        		int difficulty;
+	        		if(sizeBox.getSelectedItem().equals("3x3"))
+	        		{
+	        			size=3;
+	        		}
+	        		else if(sizeBox.getSelectedItem().equals("4x4"))
+	        		{
+	        			size=4;
+	        		}
+	        		else if(sizeBox.getSelectedItem().equals("5x5"))
+	        		{
+	        			size=5;
+	        		}
+	        		else
+	        		{
+	        			size=6;
+	        		}
+	        		createGrid(size,0);
+	        		grid=gameGrid.getGrid();
+	        		topLeftX = grid[0][0].getX();
+	        		topLeftY = grid[0][0].getY();
+	        		gameFrame.setSize(gameFrame.getWidth()+1, gameFrame.getHeight());
+	        		gameFrame.setSize(gameFrame.getWidth()-1, gameFrame.getHeight());
+
+	        	}
+	        });
 	}
 	
 	public void createGrid(int dimensions, int turns) {
@@ -175,8 +213,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseClicked(MouseEvent e) {
 		
 	}
 
