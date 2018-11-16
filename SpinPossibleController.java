@@ -31,11 +31,14 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private Timer helpTimer;
 	private int helpCounter=0;
 	private Tile<Integer>[][] grid;
-	private final int HARD_ROTATION = 35;
-	private final int MEDIUM_ROTATION = 24;
-	private final int EASY_ROTATION = 10;
+	private final int HARD_DIFFICULTY_NUMBER_OF_ROTATIONS = 35;
+	private final int MEDIUM_DIFFICULTY_NUMBER_OF_ROTATIONS = 24;
+	private final int EASY_DIFFICULTY_NUMBER_OF_ROTATIONS = 10;
 	private int topLeftX;
 	private int topLeftY;
+	
+	private final Dimension BOX_AND_BUTTON_SIZE = new Dimension(75,25);
+	private final int SPACE_BETWEEN_BOXES_AND_BUTTONS=100;
 
 	private JButton playButton;
 	private JButton helpButton;
@@ -45,6 +48,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	
 	private JComboBox difficultyBox;
 	private JComboBox sizeBox;
+	private JComboBox presetRandomizeBox;
 	
 	private JPanel gridPanel;
 	private JPanel actionPanel;
@@ -98,37 +102,41 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        gameFrame.add(gridPanel);
 	    
 	        playButton = new JButton("Play");
-	        playButton.setSize(75, 25);
+	        playButton.setSize(BOX_AND_BUTTON_SIZE);
 	        playButton.setLocation(10, 5);
 	        actionPanel.add(playButton);
 	        
+	        String[] presetOrRandom = {"Preset","Random"};
+	        presetRandomizeBox = new JComboBox<String>(presetOrRandom);
+	        presetRandomizeBox.setSize(BOX_AND_BUTTON_SIZE);
+	        
 	        String[] sizeList = {"3x3","4x4","5x5","6x6"};
 	        sizeBox = new JComboBox<String>(sizeList);
-	        sizeBox.setSize(75, 25);
-	        sizeBox.setAlignmentX(playButton.getAlignmentX()+20);
+	        sizeBox.setSize(BOX_AND_BUTTON_SIZE);
 	        
 	        String[] diffList = {"Easy","Medium","Hard"};
 	        difficultyBox = new JComboBox<String>(diffList);
-	        difficultyBox.setSize(75, 25);
-	        difficultyBox.setAlignmentX(sizeBox.getAlignmentX()+20);
+	        difficultyBox.setSize(BOX_AND_BUTTON_SIZE);
 	        
+	        actionPanel.add(presetRandomizeBox);
 	        actionPanel.add(difficultyBox);
 	        actionPanel.add(sizeBox);
-	        sizeBox.setLocation(playButton.getX()+100, playButton.getY());
-	        difficultyBox.setLocation(sizeBox.getX()+100,sizeBox.getY());
+	        presetRandomizeBox.setLocation(playButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
+	        sizeBox.setLocation(presetRandomizeBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, presetRandomizeBox.getY());
+	        difficultyBox.setLocation(sizeBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS,sizeBox.getY());
 	        
 	        helpButton = new JButton("Help");
 	        rulesButton = new JButton("Rules");
-	        finishedButton = new JButton("Finished");
+	        finishedButton = new JButton("Check");
 	        actionPanel.add(helpButton);
 	        actionPanel.add(rulesButton);
 	        actionPanel.add(finishedButton);
-	        finishedButton.setLocation(difficultyBox.getX()+100, playButton.getY());
-	        helpButton.setLocation(finishedButton.getX()+125, playButton.getY());
-	        rulesButton.setLocation(helpButton.getX()+100, playButton.getY());
-	        finishedButton.setSize(100, 25);
-	        rulesButton.setSize(75, 25);
-	        helpButton.setSize(75,25);
+	        finishedButton.setLocation(difficultyBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
+	        helpButton.setLocation(finishedButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
+	        rulesButton.setLocation(helpButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
+	        finishedButton.setSize(BOX_AND_BUTTON_SIZE);
+	        rulesButton.setSize(BOX_AND_BUTTON_SIZE);
+	        helpButton.setSize(BOX_AND_BUTTON_SIZE);
 	         
 	        gameFrame.addMouseListener(this);
 	        playButton.addActionListener(new ActionListener() {
@@ -156,8 +164,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        		grid=gameGrid.getGrid();
 	        		topLeftX = grid[0][0].getX();
 	        		topLeftY = grid[0][0].getY();
-	        		gameFrame.setSize(gameFrame.getWidth()+1, gameFrame.getHeight());
-	        		gameFrame.setSize(gameFrame.getWidth()-1, gameFrame.getHeight());
+	        		resize();
 
 	        	}
 	        });
@@ -239,6 +246,10 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+	private void resize() {
+		gameFrame.setSize(gameFrame.getWidth()+1, gameFrame.getHeight());
+		gameFrame.setSize(gameFrame.getWidth()-1, gameFrame.getHeight());
 	}
 
 
