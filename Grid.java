@@ -241,9 +241,12 @@ public class Grid extends JPanel {
 		boolean found = false;
 		for(int i = 0; i < dimensions*dimensions && !found; i++)
 		{
-			if(getTile(i).contains(mouseX, mouseY))
+			//System.out.print(getTile(i).getX()+","+getTile(i).getY()+","+getTile(i).getAlignmentX()+
+			//		","+getTile(i).getAlignmentY()+"; ");
+			if(getTile(i).contains(mouseX-this.getX(), mouseY-this.getY()))
 			{
 				found = true;
+				System.out.println("\nFound: " + i+1);
 				selectTile(i);
 			}
 		}
