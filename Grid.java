@@ -236,6 +236,18 @@ public class Grid extends JPanel {
 		}
 		return bottomLeftTile;
 	}
+	public void selectTile(int mouseX, int mouseY)
+	{
+		boolean found = false;
+		for(int i = 0; i < dimensions*dimensions && !found; i++)
+		{
+			if(getTile(i).contains(mouseX, mouseY))
+			{
+				found = true;
+				selectTile(i);
+			}
+		}
+	}
 	public void selectTile(int tile) // Originally returned the tile found at the given position in tileGrid; now, sets that tile's selected value to the boolean parameter.
 	{
 		checkInitialization();

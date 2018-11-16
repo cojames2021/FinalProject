@@ -79,6 +79,7 @@ public class Tile<T> extends JPanel {
 		g.rotate(Math.toRadians(180));
 		super.paintComponent(g);
 		super.paint(g);
+		super.repaint();
 	}
 	public boolean isSelected()
 	{

@@ -51,8 +51,9 @@ public class GridDriver
 		{
 			grid.selectTile(1);
 			Thread.sleep(1000);
-			grid.rotateRectangle();
-			Thread.sleep(1000);
+			grid.selectTile(35);
+			//grid.rotateRectangle();
+			Thread.sleep(5000);
 		}
 		
 		return testSuccessful;
