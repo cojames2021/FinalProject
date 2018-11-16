@@ -44,13 +44,14 @@ public class Grid extends JPanel {
 		}
 		else
 		{
+			int tileSize = gridPanel.getHeight()-100;
 			tileGrid = new Tile[dimensions][dimensions];
 			this.dimensions = dimensions;
 			numberOfTiles = 0;
 			numberSelected = 0;
 			this.setLayout(new GridBagLayout());
 			gridPanel.add(this);
-			this.setSize(new Dimension(gridPanel.getWidth(),gridPanel.getHeight()));
+			this.setSize(new Dimension(tileSize,tileSize));
 			initialized = true;
 		}
 	}
@@ -100,7 +101,7 @@ public class Grid extends JPanel {
 	
 	private void fillInRectangle(int topTile, int bottomTile)
 	
-	// Takes two tile positions as inuput. These are taken to be the top-left corner and bottom-right corner of the rectangle that needs to be filled.
+	// Takes two tile positions as input. These are taken to be the top-left corner and bottom-right corner of the rectangle that needs to be filled.
 	// Selects all of the tiles in the rectangle.
 	
 	{
@@ -256,5 +257,9 @@ public class Grid extends JPanel {
 	public boolean tileIsSelected(int tile)
 	{
 		return getTile(tile).isSelected();
+	}
+	public Tile<Integer>[][] getGrid()
+	{
+		return tileGrid;
 	}
 }
