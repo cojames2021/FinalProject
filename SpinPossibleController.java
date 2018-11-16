@@ -161,9 +161,9 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        			size=6;
 	        		}
 	        		createGrid(size,0);
-	        		grid=gameGrid.getGrid();
-	        		topLeftX = grid[0][0].getX();
-	        		topLeftY = grid[0][0].getY();
+	        		//grid=gameGrid.getGrid();
+	        		//topLeftX = grid[0][0].getX();
+	        		//topLeftY = grid[0][0].getY();
 	        		resize();
 
 	        	}

@@ -63,14 +63,6 @@ public class Grid extends JPanel {
 		int bottom1 = -1;
 		int bottom2 = -1;
 		Tile temp;
-		/*for(int i = 0; i < dimensions*dimensions && top1 < 0 ; i++) // Gets the coordinates of the top-left-most selected Tile
-		{
-			if(tileGrid[coord1(i)][coord2(i)].isSelected())
-			{
-				top1 = coord1(i);
-				top2 = coord2(i);
-			}
-		}	//*/
 		top1 = coord1(findTopLeftSelectedTile());
 		top2 = coord2(findTopLeftSelectedTile());
 		bottom1 = coord1(findBottomRightSelectedTile());
@@ -82,14 +74,6 @@ public class Grid extends JPanel {
 		}
 		else // A tile was found, so the function can continue as normal.
 		{
-			/*for(int j = dimensions*dimensions-1; j >= 0 && bottom1 < 0 ; j--) // Gets the coordinates of the bottom-right-most selected Tile
-			{
-				if(tileGrid[coord1(j)][coord2(j)].isSelected())
-				{
-					bottom1 = coord1(j);
-					bottom2 = coord2(j);
-				}
-			}//*/
 			for(int i = top1; i <= bottom1/2; i++)
 			{
 				for(int j = top2; j <= bottom2; j++)
@@ -251,6 +235,18 @@ public class Grid extends JPanel {
 			}
 		}
 		return bottomLeftTile;
+	}
+	public void selectTile(int mouseX, int mouseY)
+	{
+		boolean found = false;
+		for(int i = 0; i < dimensions*dimensions && !found; i++)
+		{
+			if(getTile(i).contains(mouseX, mouseY))
+			{
+				found = true;
+				selectTile(i);
+			}
+		}
 	}
 	public void selectTile(int tile) // Originally returned the tile found at the given position in tileGrid; now, sets that tile's selected value to the boolean parameter.
 	{

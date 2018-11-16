@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.font.TextAttribute;
@@ -73,6 +75,11 @@ public class Tile<T> extends JPanel {
 		else {
 			orientation=RIGHTSIDE_UP;
 		}
+		Graphics2D g = (Graphics2D)this.getGraphics();
+		g.rotate(Math.toRadians(180));
+		super.paintComponent(g);
+		super.paint(g);
+		super.repaint();
 	}
 	public boolean isSelected()
 	{
