@@ -238,23 +238,19 @@ public class Grid extends JPanel {
 	}
 	public void selectTile(int mouseX, int mouseY)
 	{
-		boolean found = false;
-		for(int i = 0; i < dimensions*dimensions && !found; i++)
-		{
-			//System.out.print(getTile(i).getX()+","+getTile(i).getY()+","+getTile(i).getAlignmentX()+
-			//		","+getTile(i).getAlignmentY()+"; ");
-			if(getTile(i).contains(mouseX-this.getX(), mouseY-this.getY()))
-			{
-				found = true;
-				System.out.println("\nFound: " + i+1);
-				selectTile(i);
-			}
-		}
+			int tileWidth = this.getWidth()/dimensions;
+			int tileHeight = this.getHeight()/dimensions;
+			int gridX = mouseX/tileWidth;
+			int gridY = mouseY/tileHeight;
+			selectTile(tileGrid[gridY][gridX]);
+
+			
+			
 	}
-	public void selectTile(int tile) // Originally returned the tile found at the given position in tileGrid; now, sets that tile's selected value to the boolean parameter.
+	public void selectTile(Tile tile) // Originally returned the tile found at the given position in tileGrid; now, sets that tile's selected value to the boolean parameter.
 	{
 		checkInitialization();
-		getTile(tile).select(true);
+		tile.select(true);
 		if(numberSelected == 1)
 		{
 			fillInRectangle(findTopLeftSelectedTile(),findBottomRightSelectedTile());
