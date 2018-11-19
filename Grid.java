@@ -62,11 +62,14 @@ public class Grid extends JPanel {
 		int top2 = -1;
 		int bottom1 = -1;
 		int bottom2 = -1;
-		Tile temp;
+		Tile temp1;
+		Tile temp2;
 		top1 = coord1(findTopLeftSelectedTile());
 		top2 = coord2(findTopLeftSelectedTile());
 		bottom1 = coord1(findBottomRightSelectedTile());
 		bottom2 = coord2(findBottomRightSelectedTile());
+		GridBagLayout layout = (GridBagLayout)this.getLayout();
+		GridBagConstraints constraints = new GridBagConstraints();
 		
 		if(top1 < 0) // top1 is still -1, indicating that no selected tiles were found, so there is nothing that can be rotated. Throw an exception and terminate the function.
 		{
@@ -78,17 +81,27 @@ public class Grid extends JPanel {
 			{
 				for(int j = top2; j <= bottom2; j++)
 				{
-					temp = tileGrid[i][j];
-					tileGrid[i][j] = tileGrid[bottom1-(i-top1)][bottom2-(j-top2)];
-					//this.toBeContinued(YES Roundabout);
+					temp1 = tileGrid[i][j];
+					layout.removeLayoutComponent(temp1);
+					temp2 = tileGrid[bottom1-(i-top1)][bottom2-(j-top2)];
+					tileGrid[i][j] = temp2;
+					layout.removeLayoutComponent(temp2);
+					constraints.gridx = j;
+					constraints.gridy = i;
+					layout.addLayoutComponent(temp2, constraints);
 					tileGrid[i][j].changeOrientation();
-					tileGrid[i][j].select(false);
-					tileGrid[bottom1-(i-top1)][bottom2-(j-top2)] = temp;
+					
+					tileGrid[bottom1-(i-top1)][bottom2-(j-top2)] = temp1;
+					constraints.gridx = bottom2-(j-top2);
+					constraints.gridy = bottom1-(i-top1);
+					layout.addLayoutComponent(temp1, constraints);
 					tileGrid[bottom1-(i-top1)][bottom2-(j-top2)].changeOrientation();
-					tileGrid[bottom1-(i-top1)][bottom2-(j-top2)].select(false);
 				}
 			}
 			numberSelected = 0;
+			revalidate();
+			clear();
+			//super.repaint();
 		}
 	}
 	public void swapTiles(int tile1, int tile2)			// Previously named "changePosition"

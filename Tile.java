@@ -75,12 +75,22 @@ public class Tile<T> extends JPanel {
 		else {
 			orientation=RIGHTSIDE_UP;
 		}
-		Graphics2D g = (Graphics2D)this.getGraphics();
-		g.rotate(Math.toRadians(180));
-		super.paintComponent(g);
-		super.paint(g);
-		super.repaint();
+		paintComponent(getGraphics());
+		/*Graphics2D g2d = (Graphics2D)getGraphics();
+		g2d.rotate(Math.toRadians(180),getWidth()/2,getHeight()/2);
+		super.paint(g2d); // */
 	}
+	@Override
+	public void paintComponent(Graphics g)
+	{
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D)g.create();
+		//g.rotate(Math.PI / 4, valueText.getWidth() / 2, valueText.getHeight() / 2);
+		//g.rotate(Math.toRadians(180));
+		g2d.rotate(Math.toRadians(180),getWidth()/2,getHeight()/2);
+		//super.repaint();
+		
+	}// */
 	public boolean isSelected()
 	{
 		return selected;
