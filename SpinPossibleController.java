@@ -31,6 +31,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private Timer helpTimer;
 	private int helpCounter=0;
 	private Tile<Integer>[][] grid;
+	
 	private final int HARD_DIFFICULTY_NUMBER_OF_ROTATIONS = 35;
 	private final int MEDIUM_DIFFICULTY_NUMBER_OF_ROTATIONS = 24;
 	private final int EASY_DIFFICULTY_NUMBER_OF_ROTATIONS = 10;
@@ -137,37 +138,19 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        finishedButton.setSize(BOX_AND_BUTTON_SIZE);
 	        rulesButton.setSize(BOX_AND_BUTTON_SIZE);
 	        helpButton.setSize(BOX_AND_BUTTON_SIZE);
-	         
-	        gameFrame.addMouseListener(this);
+
 	        playButton.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
 	        		gridPanel.removeAll();
-	        		int size;
-	        		int difficulty;
-	        		if(sizeBox.getSelectedItem().equals("3x3"))
-	        		{
-	        			size=3;
-	        		}
-	        		else if(sizeBox.getSelectedItem().equals("4x4"))
-	        		{
-	        			size=4;
-	        		}
-	        		else if(sizeBox.getSelectedItem().equals("5x5"))
-	        		{
-	        			size=5;
-	        		}
-	        		else
-	        		{
-	        			size=6;
-	        		}
+	        		int size = gridSize();
+	        		int difficulty = gridDifficulty();
+	        		
 	        		createGrid(size,0);
-	        		//grid=gameGrid.getGrid();
-	        		//topLeftX = grid[0][0].getX();
-	        		//topLeftY = grid[0][0].getY();
 	        		resize();
 
 	        	}
 	        });
+	        
 	}
 	
 	public void createGrid(int dimensions, int turns) {
@@ -177,11 +160,13 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			gameGrid.addTile(i);
 		}
 		gameGrid.randomize(turns);
+		gameGrid.addMouseListener(this);
 	}
 	
 	public void createGrid(String filename)
 	{
 		readFile(filename);
+		gameGrid.addMouseListener(this);
 	}
 	
 	private void rotate() {
@@ -221,8 +206,8 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println(e.getX());
 		gameGrid.selectTile(e.getX(),e.getY());
+		
 	}
 
 	@Override
@@ -251,6 +236,34 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private void resize() {
 		gameFrame.setSize(gameFrame.getWidth()+1, gameFrame.getHeight());
 		gameFrame.setSize(gameFrame.getWidth()-1, gameFrame.getHeight());
+	}
+	
+	private int gridSize() {
+		int size;
+		if(sizeBox.getSelectedItem().equals("3x3"))
+		{
+			size=3;
+		}
+		else if(sizeBox.getSelectedItem().equals("4x4"))
+		{
+			size=4;
+		}
+		else if(sizeBox.getSelectedItem().equals("5x5"))
+		{
+			size=5;
+		}
+		else
+		{
+			size=6;
+		}
+		return size;
+	}
+	
+	private int gridDifficulty() {
+		int difficulty =0;
+		
+		return difficulty;
+		
 	}
 
 
