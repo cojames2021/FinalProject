@@ -32,11 +32,9 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private int helpCounter=0;
 	private Tile<Integer>[][] grid;
 	
-	private final int HARD_DIFFICULTY_NUMBER_OF_ROTATIONS = 35;
-	private final int MEDIUM_DIFFICULTY_NUMBER_OF_ROTATIONS = 24;
-	private final int EASY_DIFFICULTY_NUMBER_OF_ROTATIONS = 10;
-	private int topLeftX;
-	private int topLeftY;
+	private final int HARD_DIFFICULTY_NUMBER_OF_ROTATIONS = 6;
+	private final int MEDIUM_DIFFICULTY_NUMBER_OF_ROTATIONS = 4;
+	private final int EASY_DIFFICULTY_NUMBER_OF_ROTATIONS = 2;
 	
 	private final Dimension BOX_AND_BUTTON_SIZE = new Dimension(75,25);
 	private final int SPACE_BETWEEN_BOXES_AND_BUTTONS=100;
@@ -161,6 +159,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		}
 		gameGrid.randomize(turns);
 		gameGrid.addMouseListener(this);
+		gameGrid.clear();
 	}
 	
 	public void createGrid(String filename)
@@ -261,7 +260,18 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	
 	private int gridDifficulty() {
 		int difficulty =0;
-		
+		if(difficultyBox.getSelectedItem().equals("Easy"))
+		{
+			difficulty=EASY_DIFFICULTY_NUMBER_OF_ROTATIONS;
+		}
+		else if(difficultyBox.getSelectedItem().equals("Medium"))
+		{
+			difficulty=MEDIUM_DIFFICULTY_NUMBER_OF_ROTATIONS;
+		}
+		else
+		{
+			difficulty=HARD_DIFFICULTY_NUMBER_OF_ROTATIONS;
+		}
 		return difficulty;
 		
 	}
