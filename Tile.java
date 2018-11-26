@@ -24,6 +24,7 @@ public class Tile<T> extends JPanel {
 	private final int UPSIDE_DOWN = 1;
 	private final int RIGHTSIDE_UP = 0;
 	private boolean selected;
+	private boolean rotating; // This value is used in the paintComponent method. It is false by default, but set to true when changeOrientation is called. If true, paintComponent rotates the tile 180 degrees, then sets it back to false.
 	private final Color DEFAULT_COLOR = new Color(220,220,220);
 	private final Color SELECTED_COLOR = new Color(255,255,200);
 	private JLabel valueText;
@@ -33,6 +34,7 @@ public class Tile<T> extends JPanel {
 		VALUE = value;
 		orientation = RIGHTSIDE_UP;
 		selected = false;
+		rotating = false;
 		/*this.setBounds(x,y,width,height);*/
 		this.setLayout(new BorderLayout());
 		valueText = new JLabel(value.toString());
@@ -68,6 +70,8 @@ public class Tile<T> extends JPanel {
 	}
 	public void changeOrientation()
 	{
+		rotating = true;
+		//System.out.println(rotating);
 		if(orientation==RIGHTSIDE_UP)
 		{
 			orientation=UPSIDE_DOWN;
@@ -75,7 +79,9 @@ public class Tile<T> extends JPanel {
 		else {
 			orientation=RIGHTSIDE_UP;
 		}
-		paintComponent(getGraphics());
+		repaint();
+		revalidate();
+		//paintComponent(getGraphics());
 		/*Graphics2D g2d = (Graphics2D)getGraphics();
 		g2d.rotate(Math.toRadians(180),getWidth()/2,getHeight()/2);
 		super.paint(g2d); // */
@@ -83,13 +89,16 @@ public class Tile<T> extends JPanel {
 	@Override
 	public void paintComponent(Graphics g)
 	{
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D)g.create();
-		//g.rotate(Math.PI / 4, valueText.getWidth() / 2, valueText.getHeight() / 2);
-		//g.rotate(Math.toRadians(180));
-		g2d.rotate(Math.toRadians(180),getWidth()/2,getHeight()/2);
-		//super.repaint();
-		
+		Graphics2D g2d = (Graphics2D)g;
+		if(orientation == UPSIDE_DOWN)
+		{
+			g2d.rotate(Math.toRadians(180),getWidth()/2,getHeight()/2);
+			/*super.repaint();
+			revalidate();
+			this.repaint(); //*/
+			rotating = false;
+		}
+		super.paintComponent(g2d);
 	}// */
 	public boolean isSelected()
 	{
