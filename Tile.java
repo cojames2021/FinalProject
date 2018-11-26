@@ -79,8 +79,8 @@ public class Tile<T> extends JPanel {
 		else {
 			orientation=RIGHTSIDE_UP;
 		}
-		repaint();
-		revalidate();
+	//	repaint();
+	//	revalidate();
 		//paintComponent(getGraphics());
 		/*Graphics2D g2d = (Graphics2D)getGraphics();
 		g2d.rotate(Math.toRadians(180),getWidth()/2,getHeight()/2);
