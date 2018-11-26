@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class SpinPossibleController extends JPanel implements MouseListener {
 	private Grid gameGrid;
@@ -185,6 +186,8 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 							}
 						}
 						ruleReader.close();
+						JTextArea text = new JTextArea(rulebook);
+						JScrollPane logEntries = new JScrollPane(text);
 						JOptionPane.showMessageDialog(null, rulebook);
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
