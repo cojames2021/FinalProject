@@ -77,9 +77,16 @@ public class Grid extends JPanel {
 		}
 		else // A tile was found, so the function can continue as normal.
 		{
-			for(int i = top1; i <= bottom1/2; i++)
+			
+			for(int i = top1; i <= (top1+bottom1)/2; i++)
 			{
-				for(int j = top2; j <= bottom2; j++)
+				//System.out.println("Top tile: ("+top1+","+top2+"), Bottom tile: ("+bottom1+","+bottom2+")");
+				int jStopVal; // We want j to go from top2 to bottom 2 if we are currently swapping two different rows. However, if we are swapping one row on itself, we want to stop halfway through the row.
+				if(i==(top1+bottom1)/2 + (top1+bottom1)%2) // If we are swapping one row on itself
+					jStopVal = bottom2/2;
+				else // If we are swapping two different rows
+					jStopVal = bottom2;
+				for(int j = top2; j <= jStopVal; j++)
 				{
 					temp1 = tileGrid[i][j];
 					layout.removeLayoutComponent(temp1);
