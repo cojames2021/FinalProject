@@ -80,7 +80,7 @@ public class Grid extends JPanel {
 			if(top1 == bottom1 && top2 == bottom2)
 				tileGrid[top1][bottom2].changeOrientation();
 			else
-			{
+			{			
 				for(int i = top1; i <= (top1+bottom1)/2; i++)
 				{
 					//System.out.println("Top tile: ("+top1+","+top2+"), Bottom tile: ("+bottom1+","+bottom2+")");
