@@ -77,9 +77,17 @@ public class Grid extends JPanel {
 		}
 		else // A tile was found, so the function can continue as normal.
 		{
-			for(int i = top1; i <= bottom1/2; i++)
+			for(int i = top1; i <= (bottom1+top1)/2; i++)
 			{
-				for(int j = top2; j <= bottom2; j++)
+				int JStopVal;
+				if(top1==bottom1)
+				{
+					JStopVal = bottom2/2;
+				}
+				else {
+					JStopVal = bottom2;
+				}
+				for(int j = top2; j <= JStopVal; j++)
 				{
 					temp1 = tileGrid[i][j];
 					layout.removeLayoutComponent(temp1);

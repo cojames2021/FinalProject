@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class SpinPossibleController extends JPanel implements MouseListener {
 	private Grid gameGrid;
@@ -147,41 +148,71 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        		gridPanel.removeAll();
 	        		int size = gridSize();
 	        		int difficulty = gridDifficulty();
-	        		
-	        		createGrid(size,difficulty);
+	        		if(presetRandomizeBox.getSelectedItem().equals("Preset"))
+	        		{
+	        			createGrid(choosePresetGrid());
+	        		}
+	        		else 
+	        		{
+	        			createGrid(size,difficulty);
+	        			
+	        		}
 	        		resize();
+	        		gameIsReady = true;
 
 	        	}
 	        });
+	        
 	        helpButton.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-	        		
-
+	        		help();
 	        	}
 	        });
-	        rulesButton.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	        		
-
-	        	}
-	        });
+	       	rulesButton.addActionListener(new ActionListener() {
+	       		public void actionPerformed(ActionEvent e) {
+	       			File rules = new File("Rules");
+	       			try {
+						Scanner ruleReader = new Scanner(rules);
+						String rulebook = "";
+						while(ruleReader.hasNextLine())
+						{
+							if(ruleReader.next().equals("/n"))
+							{
+								rulebook = rulebook + "\n";
+							}
+							else {
+								rulebook = rulebook + " " + ruleReader.nextLine();
+							}
+						}
+						ruleReader.close();
+						JOptionPane.showMessageDialog(null, rulebook);
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	       		}
+	       	});
 	        finishedButton.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-	        		
-
-	        	}
-	        });
-	        rotateButton.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	        		gameGrid.rotateRectangle();
-	        	}
-	        });
+	        		finished();
+		        }
+		    });
+		    rotateButton.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent e) {
+		        	if(gameIsReady)
+		        	{
+		        		rotate();
+		        	}
+		        }
+		    });
+	        
 	        
 	        
 	}
 	
 	public void createGrid(int dimensions, int turns) {
 		gameGrid = new Grid(dimensions, gridPanel);
+		gridSize=dimensions*dimensions;
 		for(int i = 1; i <= dimensions*dimensions; i++)
 		{
 			gameGrid.addTile(i);
@@ -201,8 +232,8 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		gameGrid.rotateRectangle();
 	}
 	
-	private boolean finished() {
-		return false;
+	private void finished() {
+		
 	}
 	
 	public boolean playGame() {
@@ -214,7 +245,8 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		try {
 			Scanner fileReader = new Scanner(gridFile);
 			int size = fileReader.nextInt();
-			gameGrid = new Grid(size*size, gridPanel);
+			gridSize=size*size;
+			gameGrid = new Grid(size, gridPanel);
 			for(int i = 0; i<size*size;i++) 
 			{
 				gameGrid.addTile(fileReader.nextInt());
@@ -303,6 +335,72 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		}
 		return difficulty;
 		
+	}
+	private String choosePresetGrid()
+	{
+		String filename;
+		if(sizeBox.getSelectedItem().equals("3x3"))
+		{
+			if(difficultyBox.getSelectedItem().equals("easy"))
+			{
+				filename = "easy3x3";
+			}
+			else if(difficultyBox.getSelectedItem().equals("medium"))
+			{
+				filename = "medium3x3";
+			}
+			else
+			{
+				filename = "hard3x3";
+			}
+		}
+		else if(sizeBox.getSelectedItem().equals("4x4"))
+		{
+			if(difficultyBox.getSelectedItem().equals("easy"))
+			{
+				filename = "easy4x4";
+			}
+			else if(difficultyBox.getSelectedItem().equals("medium"))
+			{
+				filename = "medium4x4";
+			}
+			else
+			{
+				filename = "hard4x4";
+			}
+		}
+		else if(sizeBox.getSelectedItem().equals("5x5"))
+		{
+			if(difficultyBox.getSelectedItem().equals("easy"))
+			{
+				filename = "easy5x5";
+			}
+			else if(difficultyBox.getSelectedItem().equals("medium"))
+			{
+				filename = "medium5x5";
+			}
+			else
+			{
+				filename = "hard5x5";
+			}
+		}
+		else
+		{
+			if(difficultyBox.getSelectedItem().equals("easy"))
+			{
+				filename = "easy6x6";
+			}
+			else if(difficultyBox.getSelectedItem().equals("medium"))
+			{
+				filename = "medium6x6";
+			}
+			else
+			{
+				filename = "hard6x6";
+			}
+		}
+		
+		return filename;
 	}
 
 
