@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 public class Grid extends JPanel {
 	private int numberOfTiles;
 	private int dimensions;
-	private Tile[][] tileGrid;
+	private Tile<Integer>[][] tileGrid;
 	private int numberSelected;
 	private final int MAXIMUM_DIMENSIONS = 6;
 	private final int MINIMUM_DIMENSIONS = 3;
@@ -109,6 +109,7 @@ public class Grid extends JPanel {
 					}
 				}
 			}
+			//tileGrid[(top1+bottom1)/2][(top2+bottom2)/2].changeOrientation();
 			numberSelected = 0;
 			revalidate();
 			clear();

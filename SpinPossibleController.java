@@ -29,14 +29,13 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private int gridSize;
 	private boolean gameIsReady;
 	private Container gameContentPane;
-	private JPanel panelContainer;
-	private Timer helpTimer;
 	private int helpCounter=0;
 	private Tile<Integer>[][] grid;
 	
 	private final int HARD_DIFFICULTY_NUMBER_OF_ROTATIONS = 6;
 	private final int MEDIUM_DIFFICULTY_NUMBER_OF_ROTATIONS = 4;
 	private final int EASY_DIFFICULTY_NUMBER_OF_ROTATIONS = 2;
+	private final int HELP_MAX = 3;
 	
 	private final Dimension BOX_AND_BUTTON_SIZE = new Dimension(75,25);
 	private final int SPACE_BETWEEN_BOXES_AND_BUTTONS=100;
@@ -99,7 +98,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        gameFrame.add(actionPanel);
 	        
 	        gridPanel = new JPanel();
-	        gridPanel.setSize(gameWindowWidth, (int)(gameWindowHeight*0.95));//This is based off of the 0.05 so the entire JFrame is used
+	        gridPanel.setSize(gameWindowWidth, (int)(gameWindowHeight*0.9));//This is based off of the 0.05 so the entire JFrame is used
 	        gridPanel.setLocation(actionPanel.getX()-5, actionPanel.getHeight());
 	        gameFrame.add(gridPanel);
 	    
@@ -131,22 +130,26 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        rulesButton = new JButton("Rules");
 	        finishedButton = new JButton("Check");
 	        rotateButton = new JButton("Rotate");
+	        clearButton = new JButton("Clear");
 	        actionPanel.add(helpButton);
 	        actionPanel.add(rulesButton);
 	        actionPanel.add(finishedButton);
 	        actionPanel.add(rotateButton);
+	        actionPanel.add(clearButton);
 	        finishedButton.setLocation(difficultyBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
 	        helpButton.setLocation(finishedButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
 	        rulesButton.setLocation(helpButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
 	        rotateButton.setLocation(rulesButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
+	        clearButton.setLocation(rotateButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
 	        finishedButton.setSize(BOX_AND_BUTTON_SIZE);
 	        rulesButton.setSize(BOX_AND_BUTTON_SIZE);
 	        helpButton.setSize(BOX_AND_BUTTON_SIZE);
 	        rotateButton.setSize(BOX_AND_BUTTON_SIZE);
+	        clearButton.setSize(BOX_AND_BUTTON_SIZE);
 
 	        playButton.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-	        		gridPanel.removeAll();
+	        		
 	        		int size = gridSize();
 	        		int difficulty = gridDifficulty();
 	        		if(presetRandomizeBox.getSelectedItem().equals("Preset"))
@@ -159,6 +162,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        			
 	        		}
 	        		resize();
+	        		grid = gameGrid.getGrid();
 	        		gameIsReady = true;
 
 	        	}
@@ -188,7 +192,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 						ruleReader.close();
 						JTextArea text = new JTextArea(rulebook);
 						JScrollPane logEntries = new JScrollPane(text);
-						JOptionPane.showMessageDialog(null, rulebook);
+						JOptionPane.showMessageDialog(gameFrame, logEntries);
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -208,12 +212,22 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		        	}
 		        }
 		    });
+		    clearButton.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent e) {
+		        	if(gameIsReady)
+		        	{
+		        		gameGrid.clear();
+		        	}
+		        }
+		    });
 	        
 	        
 	        
 	}
 	
 	public void createGrid(int dimensions, int turns) {
+		gridPanel.removeAll();
+		helpCounter = 0;
 		gameGrid = new Grid(dimensions, gridPanel);
 		gridSize=dimensions*dimensions;
 		for(int i = 1; i <= dimensions*dimensions; i++)
@@ -227,6 +241,8 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	
 	public void createGrid(String filename)
 	{
+		helpCounter = 0;
+		gridPanel.removeAll();
 		readFile(filename);
 		gameGrid.addMouseListener(this);
 	}
@@ -236,7 +252,26 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	}
 	
 	private void finished() {
-		
+		int correctSpotCounter=0;
+		int currentSpot = 1;
+ 		for(int i = 0; i<gridSize;i++)
+		{
+ 			for(int j=0;j<gridSize;j++)
+ 			{
+	 			if(grid[i][j].getValue()==currentSpot)
+	 			{
+	 				correctSpotCounter++;
+	 			}
+	 			currentSpot++;
+ 			}
+ 			
+ 			
+		}
+ 		if(correctSpotCounter==gridSize*gridSize)
+ 		{
+ 			JOptionPane.showMessageDialog(gameFrame, "You won!");
+ 			createGrid(gridSize(), gridDifficulty());
+ 		}
 	}
 	
 	public boolean playGame() {
@@ -248,7 +283,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		try {
 			Scanner fileReader = new Scanner(gridFile);
 			int size = fileReader.nextInt();
-			gridSize=size*size;
+			gridSize=size;
 			gameGrid = new Grid(size, gridPanel);
 			for(int i = 0; i<size*size;i++) 
 			{
@@ -264,7 +299,47 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 
 	
 	private void help() {
-		
+		int currentSpot = 0;
+		boolean isCorrect = true;
+		boolean foundCorrect = false;
+		int wrongTile;
+		int correctTile;
+		if(helpCounter>=HELP_MAX)
+		{
+			JOptionPane.showMessageDialog(gameFrame, "You have no more helps left!");
+		}
+		else
+		{
+			for(int i = 0;i<gridSize && isCorrect;i++)
+			{
+				for(int j = 0;j<gridSize && isCorrect;j++)
+				{
+					if(grid[i][j].getValue() == currentSpot)
+					{
+						currentSpot++;
+					}
+					else
+					{	
+						isCorrect = false;
+					}
+				}
+			}
+			wrongTile = currentSpot;
+			currentSpot = 0;
+			for(int i=0;i<gridSize && !foundCorrect;i++)
+			{
+				for(int j=0;j<gridSize && !foundCorrect;j++)
+				{
+					if(grid[i][j].getValue()==currentSpot)
+					{
+						foundCorrect = true;
+					}
+				}
+			}
+			correctTile = currentSpot;
+			gameGrid.swapTiles(wrongTile, correctTile);
+			helpCounter++;
+		}
 	}
 
 	@Override
@@ -319,6 +394,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		{
 			size=6;
 		}
+		
 		return size;
 	}
 	
@@ -344,11 +420,11 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		String filename;
 		if(sizeBox.getSelectedItem().equals("3x3"))
 		{
-			if(difficultyBox.getSelectedItem().equals("easy"))
+			if(difficultyBox.getSelectedItem().equals("Easy"))
 			{
 				filename = "easy3x3";
 			}
-			else if(difficultyBox.getSelectedItem().equals("medium"))
+			else if(difficultyBox.getSelectedItem().equals("Medium"))
 			{
 				filename = "medium3x3";
 			}
@@ -359,11 +435,11 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		}
 		else if(sizeBox.getSelectedItem().equals("4x4"))
 		{
-			if(difficultyBox.getSelectedItem().equals("easy"))
+			if(difficultyBox.getSelectedItem().equals("Easy"))
 			{
 				filename = "easy4x4";
 			}
-			else if(difficultyBox.getSelectedItem().equals("medium"))
+			else if(difficultyBox.getSelectedItem().equals("Medium"))
 			{
 				filename = "medium4x4";
 			}
@@ -374,11 +450,11 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		}
 		else if(sizeBox.getSelectedItem().equals("5x5"))
 		{
-			if(difficultyBox.getSelectedItem().equals("easy"))
+			if(difficultyBox.getSelectedItem().equals("Easy"))
 			{
 				filename = "easy5x5";
 			}
-			else if(difficultyBox.getSelectedItem().equals("medium"))
+			else if(difficultyBox.getSelectedItem().equals("Medium"))
 			{
 				filename = "medium5x5";
 			}
@@ -389,11 +465,11 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		}
 		else
 		{
-			if(difficultyBox.getSelectedItem().equals("easy"))
+			if(difficultyBox.getSelectedItem().equals("Easy"))
 			{
 				filename = "easy6x6";
 			}
-			else if(difficultyBox.getSelectedItem().equals("medium"))
+			else if(difficultyBox.getSelectedItem().equals("Medium"))
 			{
 				filename = "medium6x6";
 			}
