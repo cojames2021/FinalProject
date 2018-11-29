@@ -122,6 +122,7 @@ public class Grid<T> extends JPanel {
 						tileGrid[i][jStopVal].changeOrientation();
 				}
 			}
+			//tileGrid[(top1+bottom1)/2][(top2+bottom2)/2].changeOrientation();
 			numberSelected = 0;
 			revalidate();
 			clear();
