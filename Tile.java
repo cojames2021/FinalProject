@@ -21,8 +21,8 @@ import javax.swing.border.LineBorder;
 public class Tile<T> extends JPanel {
 	private final T VALUE;
 	private int orientation;
-	private final int UPSIDE_DOWN = 1;
-	private final int RIGHTSIDE_UP = 0;
+	public static final int UPSIDE_DOWN = 1;
+	public static final int RIGHTSIDE_UP = 0;
 	private boolean selected;
 	private boolean rotating; // This value is used in the paintComponent method. It is false by default, but set to true when changeOrientation is called. If true, paintComponent rotates the tile 180 degrees, then sets it back to false.
 	private final Color DEFAULT_COLOR = new Color(220,220,220);

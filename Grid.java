@@ -10,14 +10,15 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
-public class Grid extends JPanel {
+public class Grid<T> extends JPanel {
 	private int numberOfTiles;
 	private int dimensions;
-	private Tile[][] tileGrid;
+	private Tile<T>[][] tileGrid;
 	private int numberSelected;
 	private final int MAXIMUM_DIMENSIONS = 6;
 	private final int MINIMUM_DIMENSIONS = 3;
 	private boolean initialized = false;
+	
 	
 /************************************************************************************************************************
 	Visualization of the Grid
@@ -36,6 +37,7 @@ public class Grid extends JPanel {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public Grid(int dimensions, Container gridPanel)
 	{
 		if(dimensions > MAXIMUM_DIMENSIONS || dimensions < MINIMUM_DIMENSIONS)
@@ -62,35 +64,44 @@ public class Grid extends JPanel {
 		int top2 = -1;
 		int bottom1 = -1;
 		int bottom2 = -1;
-		Tile temp1;
-		Tile temp2;
-		top1 = coord1(findTopLeftSelectedTile());
-		top2 = coord2(findTopLeftSelectedTile());
-		bottom1 = coord1(findBottomRightSelectedTile());
-		bottom2 = coord2(findBottomRightSelectedTile());
+		Tile<T> temp1;
+		Tile<T> temp2;
+		int topLeft = findTopLeftSelectedTile();
+		int bottomRight = findBottomRightSelectedTile();
+		top1 = coord1(topLeft);
+		top2 = coord2(topLeft);
+		bottom1 = coord1(bottomRight);
+		bottom2 = coord2(bottomRight);
 		GridBagLayout layout = (GridBagLayout)this.getLayout();
 		GridBagConstraints constraints = new GridBagConstraints();
 		
-		if(top1 < 0) // top1 is still -1, indicating that no selected tiles were found, so there is nothing that can be rotated. Throw an exception and terminate the function.
+		if(top1 < 0 || bottom1 < 0 || top2 < 0 || bottom2 < 0) // one of the coordinates is still -1, indicating that no selected tiles were found, so there is nothing that can be rotated. Throw an exception and terminate the function.
 		{
-			throw new IllegalStateException("No tiles are currently selected. No rectangle to rotate.");
+			throw new IllegalStateException("No tiles selected. Cannot rotate.");
 		}
 		else // A tile was found, so the function can continue as normal.
 		{
-			if(top1 == bottom1 && top2 == bottom2)
+			if(top1 == bottom1 && top2 == bottom2) // top and bottom are the same tile (meaning this is a 1-tile rectangle)
 				tileGrid[top1][bottom2].changeOrientation();
 			else
-			{			
+			{		
+				int jStopVal; // We want j to go from top2 to bottom 2 if we are currently swapping two different rows. However, if we are swapping one row on itself, we want to stop halfway through the row.
+				boolean onMiddleRow = false;
 				for(int i = top1; i <= (top1+bottom1)/2; i++)
 				{
-					//System.out.println("Top tile: ("+top1+","+top2+"), Bottom tile: ("+bottom1+","+bottom2+")");
-					int jStopVal; // We want j to go from top2 to bottom 2 if we are currently swapping two different rows. However, if we are swapping one row on itself, we want to stop halfway through the row.
 					if(i==(top1+bottom1)/2 + (top1+bottom1)%2) // If we are swapping one row on itself
-						jStopVal = bottom2/2;
+					{
+						jStopVal = (top2+bottom2)/2;
+						onMiddleRow = true;
+					}
 					else // If we are swapping two different rows
+					{
 						jStopVal = bottom2;
+						onMiddleRow = false;
+					}
 					for(int j = top2; j <= jStopVal; j++)
 					{
+						swapTiles(i,j,bottom1-(i-top1),bottom2-(j-top2));
 						temp1 = tileGrid[i][j];
 						layout.removeLayoutComponent(temp1);
 						temp2 = tileGrid[bottom1-(i-top1)][bottom2-(j-top2)];
@@ -107,6 +118,8 @@ public class Grid extends JPanel {
 						layout.addLayoutComponent(temp1, constraints);
 						tileGrid[bottom1-(i-top1)][bottom2-(j-top2)].changeOrientation();
 					}
+					if(onMiddleRow && (top2+bottom2)%2 == 0) // This if makes sure that the center tile only rotates once.
+						tileGrid[i][jStopVal].changeOrientation();
 				}
 			}
 			numberSelected = 0;
@@ -115,12 +128,31 @@ public class Grid extends JPanel {
 			//super.repaint();
 		}
 	}
-	public void swapTiles(int tile1, int tile2)			// Previously named "changePosition"
+	public void swapTiles(int tile1, int tile2)
+	{
+		swapTiles(coord1(tile1),coord2(tile1),coord1(tile2),coord2(tile2));
+	}
+	
+	public void swapTiles(int tile1Coord1, int tile1Coord2, int tile2Coord1, int tile2Coord2)			// Previously named "changePosition"
 	{
 		checkInitialization();
-		Tile temp = getTile(tile1);
-		tileGrid[coord1(tile1)][coord2(tile1)] = tileGrid[coord1(tile2)][coord2(tile2)];
-		tileGrid[coord1(tile2)][coord2(tile2)] = temp; // */
+		GridBagLayout layout = (GridBagLayout)this.getLayout();
+		GridBagConstraints constraints = new GridBagConstraints();
+		Tile<T> temp1 = tileGrid[tile1Coord1][tile1Coord2];
+		layout.removeLayoutComponent(temp1);
+		Tile<T> temp2 = tileGrid[tile2Coord1][tile2Coord2];
+		tileGrid[tile1Coord1][tile1Coord2] = temp2;
+		layout.removeLayoutComponent(temp2);
+		constraints.gridx = tile1Coord2;
+		constraints.gridy = tile1Coord1;
+		layout.addLayoutComponent(temp2, constraints);
+		tileGrid[tile1Coord1][tile1Coord2].changeOrientation();
+		
+		tileGrid[tile2Coord1][tile2Coord2] = temp1;
+		constraints.gridx = tile2Coord2;
+		constraints.gridy = tile2Coord1;
+		layout.addLayoutComponent(temp1, constraints);
+		tileGrid[tile2Coord1][tile2Coord2].changeOrientation();
 	}	// */
 	
 	private void fillInRectangle(int topTile, int bottomTile)
@@ -133,7 +165,7 @@ public class Grid extends JPanel {
 		{
 			int temp = topTile;
 			topTile=bottomTile;
-			bottomTile=topTile;
+			bottomTile=temp;
 		}
 		int top1 = coord1(topTile);
 		int top2 = coord2(topTile);
@@ -149,12 +181,12 @@ public class Grid extends JPanel {
 		}
 	}
 	
-	public void addTile(int value) // Adds a tile to tileGrid. If tileGrid is full, it throws an indexOutOfBounds exception.
+	public void addTile(T value) // Adds a tile to tileGrid. If tileGrid is full, it throws an indexOutOfBounds exception.
 	{
 		checkInitialization();
 		if(numberOfTiles < (dimensions*dimensions)) // If tileGrid is not full
 		{
-			Tile<Integer> newTile = new Tile<Integer>(value, new Dimension(this.getWidth()/dimensions,this.getHeight()/dimensions));
+			Tile<T> newTile = new Tile<T>(value, new Dimension(this.getWidth()/dimensions,this.getHeight()/dimensions));
 			GridBagConstraints constraints = new GridBagConstraints();
 			constraints.gridx = coord2(numberOfTiles);
 			constraints.gridy = coord1(numberOfTiles);
@@ -173,6 +205,12 @@ public class Grid extends JPanel {
 			throw new IndexOutOfBoundsException("Grid is full. Cannot add another tile.");
 		}
 	}
+	public void addTile(T value, int orientation)
+	{
+		addTile(value);
+		if(orientation == Tile.UPSIDE_DOWN)
+			getTile(numberOfTiles-1).changeOrientation();
+	}
 	
 	public void randomize(int turns) // Randomly chooses two tiles for fillRectangle and rotateRectangle. It repeats this process "turns" number of times.
 	{
@@ -180,7 +218,7 @@ public class Grid extends JPanel {
 		Random randomTile = new Random();
 		for(int i = 0; i < turns; i++)
 		{
-			fillInRectangle(randomTile.nextInt((dimensions*dimensions)-1),randomTile.nextInt((dimensions*dimensions)-1));
+			fillInRectangle(randomTile.nextInt(dimensions*dimensions),randomTile.nextInt(dimensions*dimensions));
 			rotateRectangle();
 		}
 	}
@@ -199,6 +237,7 @@ public class Grid extends JPanel {
 	
 	public String toString()
 	{
+		checkInitialization();
 		String returnVal = "";
 		for(int i = 0; i < dimensions; i++)
 		{
@@ -232,8 +271,9 @@ public class Grid extends JPanel {
 	{
 		return tile%dimensions;
 	}
-	private Tile getTile(int tile)
+	private Tile<T> getTile(int tile)
 	{
+		checkInitialization();
 		return tileGrid[coord1(tile)][coord2(tile)];
 	}
 	private int findTopLeftSelectedTile()
@@ -262,16 +302,13 @@ public class Grid extends JPanel {
 	}
 	public void selectTile(int mouseX, int mouseY)
 	{
-			int tileWidth = this.getWidth()/dimensions;
-			int tileHeight = this.getHeight()/dimensions;
-			int gridX = mouseX/tileWidth;
-			int gridY = mouseY/tileHeight;
-			selectTile(tileGrid[gridY][gridX]);
-
-			
-			
+		int tileWidth = this.getWidth()/dimensions;
+		int tileHeight = this.getHeight()/dimensions;
+		int gridX = mouseX/tileWidth;
+		int gridY = mouseY/tileHeight;
+		selectTile(tileGrid[gridY][gridX]);
 	}
-	public void selectTile(Tile tile) // Originally returned the tile found at the given position in tileGrid; now, sets that tile's selected value to the boolean parameter.
+	public void selectTile(Tile<T> tile) // Originally returned the tile found at the given position in tileGrid; now, sets that tile's selected value to the boolean parameter.
 	{
 		checkInitialization();
 		tile.select(true);
@@ -293,8 +330,9 @@ public class Grid extends JPanel {
 	{
 		return getTile(tile).isSelected();
 	}
-	public Tile<Integer>[][] getGrid()
+	public Tile<T>[][] getGrid()
 	{
 		return tileGrid;
 	}
+	
 }
