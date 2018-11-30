@@ -290,10 +290,14 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			Scanner fileReader = new Scanner(gridFile);
 			int size = fileReader.nextInt();
 			gridSize=size;
+			int currentValue;
+			int currentOrientation;
 			gameGrid = new Grid(size, gridPanel);
 			for(int i = 0; i<size*size;i++) 
 			{
-				gameGrid.addTile(fileReader.nextInt());
+				currentValue = fileReader.nextInt();
+				currentOrientation = fileReader.nextInt();
+				gameGrid.addTile(currentValue, currentOrientation);
 			}
 			fileReader.close();
 		} 
