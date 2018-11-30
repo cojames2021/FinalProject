@@ -102,21 +102,7 @@ public class Grid<T> extends JPanel {
 					for(int j = top2; j <= jStopVal; j++)
 					{
 						swapTiles(i,j,bottom1-(i-top1),bottom2-(j-top2));
-						temp1 = tileGrid[i][j];
-						layout.removeLayoutComponent(temp1);
-						temp2 = tileGrid[bottom1-(i-top1)][bottom2-(j-top2)];
-						tileGrid[i][j] = temp2;
-						layout.removeLayoutComponent(temp2);
-						constraints.gridx = j;
-						constraints.gridy = i;
-						layout.addLayoutComponent(temp2, constraints);
-						tileGrid[i][j].changeOrientation();
 						
-						tileGrid[bottom1-(i-top1)][bottom2-(j-top2)] = temp1;
-						constraints.gridx = bottom2-(j-top2);
-						constraints.gridy = bottom1-(i-top1);
-						layout.addLayoutComponent(temp1, constraints);
-						tileGrid[bottom1-(i-top1)][bottom2-(j-top2)].changeOrientation();
 					}
 					if(onMiddleRow && (top2+bottom2)%2 == 0) // This if makes sure that the center tile only rotates once.
 						tileGrid[i][jStopVal].changeOrientation();
