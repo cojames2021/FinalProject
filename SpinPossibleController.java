@@ -32,9 +32,9 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private int helpCounter=0;
 	private Tile<Integer>[][] grid;
 	
-	private final int HARD_DIFFICULTY_NUMBER_OF_ROTATIONS = 6;
-	private final int MEDIUM_DIFFICULTY_NUMBER_OF_ROTATIONS = 4;
-	private final int EASY_DIFFICULTY_NUMBER_OF_ROTATIONS = 2;
+	private final int HARD_DIFFICULTY_NUMBER_OF_ROTATIONS = 7;
+	private final int MEDIUM_DIFFICULTY_NUMBER_OF_ROTATIONS = 5;
+	private final int EASY_DIFFICULTY_NUMBER_OF_ROTATIONS = 3;
 	private final int HELP_MAX = 3;
 	
 	private final Dimension BOX_AND_BUTTON_SIZE = new Dimension(75,25);
@@ -231,7 +231,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		gridPanel.removeAll();
 		helpCounter = 0;
 		gameGrid = new Grid(dimensions, gridPanel);
-		gridSize=dimensions*dimensions;
+		gridSize=dimensions;
 		for(int i = 1; i <= dimensions*dimensions; i++)
 		{
 			gameGrid.addTile(i);
@@ -260,11 +260,11 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private void finished() {
 		int correctSpotCounter=0;
 		int currentSpot = 1;
- 		for(int i = 0; i<gridSize;i++)
+ 		for(int i = 1; i<=gridSize;i++)
 		{
- 			for(int j=0;j<gridSize;j++)
+ 			for(int j=1;j<=gridSize;j++)
  			{
-	 			if(grid[i][j].getValue()==currentSpot)
+	 			if(grid[i-1][j-1].getValue()==currentSpot)
 	 			{
 	 				correctSpotCounter++;
 	 			}
@@ -320,7 +320,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			{
 				for(int j = 0;j<gridSize && isCorrect;j++)
 				{
-					if(grid[i][j].getValue() == currentSpot)
+					if(grid[i][j].getValue() == currentSpot+1)
 					{
 						currentSpot++;
 					}
