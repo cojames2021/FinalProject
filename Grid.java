@@ -148,12 +148,6 @@ public class Grid<T> extends JPanel {
 	// Selects all of the tiles in the rectangle.
 	
 	{
-		if(bottomTile < topTile)
-		{
-			int temp = topTile;
-			topTile=bottomTile;
-			bottomTile=temp;
-		}
 		int top1 = coord1(topTile);
 		int top2 = coord2(topTile);
 		int bottom1 = coord1(bottomTile);
