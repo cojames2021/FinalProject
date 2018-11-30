@@ -110,7 +110,7 @@ public class Grid<T> extends JPanel {
 			}
 			//tileGrid[(top1+bottom1)/2][(top2+bottom2)/2].changeOrientation();
 			numberSelected = 0;
-			revalidate();
+			//revalidate();
 			clear();
 			//super.repaint();
 		}
@@ -140,6 +140,7 @@ public class Grid<T> extends JPanel {
 		constraints.gridy = tile2Coord1;
 		layout.addLayoutComponent(temp1, constraints);
 		tileGrid[tile2Coord1][tile2Coord2].changeOrientation();
+		revalidate();
 	}	// */
 	
 	private void fillInRectangle(int topTile, int bottomTile)
