@@ -331,6 +331,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			{
 				for(int j = 0;j<gridSize && isCorrect;j++)
 				{
+					System.out.println("Current value at ("+i+","+j+"): "+grid[i][j].getValue()+"\tCorrect Value: "+(currentSpot+1));
 					if(grid[i][j].getValue() == currentSpot+1)
 					{
 						currentSpot++;
@@ -347,15 +348,17 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			{
 				for(int j=0;j<gridSize && !foundCorrect;j++)
 				{
-					if(grid[i][j].getValue()==currentSpot)
+					System.out.println("Current value at ("+i+","+j+"): "+grid[i][j].getValue()+"\tValue we need: "+(wrongTile+1));
+					if(grid[i][j].getValue()==wrongTile+1)
 					{
 						foundCorrect = true;
 					}
+					else currentSpot++;
 				}
 			}
-			correctTile = currentSpot;
-			gameGrid.swapTiles(wrongTile, correctTile);
-			helpCounter++;
+				correctTile = currentSpot;
+				gameGrid.swapTiles(wrongTile, correctTile);
+				helpCounter++;
 		}
 	}
 
