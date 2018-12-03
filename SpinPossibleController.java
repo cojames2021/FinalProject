@@ -28,6 +28,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private JFrame gameFrame;
 	private int gridSize;
 	private boolean gameIsReady;
+	private boolean finished =false;
 	private Container gameContentPane;
 	private int helpCounter=0;
 	private Tile<Integer>[][] grid;
@@ -172,7 +173,8 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        
 	        helpButton.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-	        		help();
+	        		if(gameIsReady)
+	        			{help();}
 	        	}
 	        });
 	       	rulesButton.addActionListener(new ActionListener() {
@@ -253,11 +255,12 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		try{gameGrid.rotateRectangle();}
 		catch (IllegalStateException i)
 		{
-			error(i);
+			//error(i);
 		}
 	}
 	
 	private void finished() {
+		finished = false;
 		int correctSpotCounter=0;
 		int currentSpot = 1;
  		for(int i = 1; i<=gridSize;i++)
@@ -275,8 +278,12 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		}
  		if(correctSpotCounter==gridSize*gridSize)
  		{
+ 			finished = true;
+ 		}
+ 		if(finished)
+ 		{
  			JOptionPane.showMessageDialog(gameFrame, "You won!");
- 			createGrid(gridSize(), gridDifficulty());
+ 			//createGrid(gridSize(), gridDifficulty());
  		}
 	}
 	
@@ -302,7 +309,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			fileReader.close();
 		} 
 		catch (FileNotFoundException e) {
-				error(e);
+				//error(e);
 		}
 	}
 	
