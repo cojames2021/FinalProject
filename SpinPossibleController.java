@@ -2,7 +2,6 @@ package spinPossible;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,10 +11,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.awt.BorderLayout;
-import java.awt.Color;
+
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -39,8 +35,16 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private final int HARD_DIFFICULTY_NUMBER_OF_ROTATIONS = 7;
 	private final int MEDIUM_DIFFICULTY_NUMBER_OF_ROTATIONS = 5;
 	private final int EASY_DIFFICULTY_NUMBER_OF_ROTATIONS = 3;
+	private final int THREE_BY_THREE_GRID_SIZE = 3;
+	private final int FOUR_BY_FOUR_GRID_SIZE = 4;
+	private final int FIVE_BY_FIVE_GRID_SIZE = 5;
+	private final int SIX_BY_SIX_GRID_SIZE = 6;
 	private final int HELP_MAX = 3;
+<<<<<<< HEAD
 	private int[] fillInStand = new int[10]; private int currentStand = 0; private int[] stand = {};
+=======
+	private final int BOX_AND_BUTTON_Y;
+>>>>>>> a8a501f6d8b62741e05c161f978e1285ab9f38ec
 	
 	private final Dimension BOX_AND_BUTTON_SIZE = new Dimension(75,25);
 	private final int SPACE_BETWEEN_BOXES_AND_BUTTONS=100;
@@ -52,14 +56,14 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private JButton finishedButton;
 	private JButton rotateButton;
 	
-	private JComboBox difficultyBox;
-	private JComboBox sizeBox;
-	private JComboBox presetRandomizeBox;
+	private JComboBox<String> difficultyBox;
+	private JComboBox<String> sizeBox;
+	private JComboBox<String> presetRandomizeBox;
 	
 	private JPanel gridPanel;
 	private JPanel actionPanel;
 	
-	private String errorMessage;
+//	private String errorMessage;
 	
 	/**********************************************************************************
 	 * (Initial JOptionPane, probably)
@@ -105,7 +109,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        gameFrame.add(actionPanel);
 	        
 	        gridPanel = new JPanel();
-	        gridPanel.setSize(gameWindowWidth, (int)(gameWindowHeight*0.9));//This is based off of the 0.05 so the entire JFrame is used
+	        gridPanel.setSize(gameWindowWidth, (int)(gameWindowHeight*0.9));//This is based off of the 0.05 so the spacing looks nice
 	        gridPanel.setLocation(actionPanel.getX()-5, actionPanel.getHeight());
 	        gameFrame.add(gridPanel);
 	    
@@ -113,6 +117,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        playButton.setSize(BOX_AND_BUTTON_SIZE);
 	        playButton.setLocation(10, 5);//This is an arbitrary location that is convenient
 	        actionPanel.add(playButton);
+	        BOX_AND_BUTTON_Y=playButton.getY();
 	        
 	        String[] presetOrRandom = {"Preset","Random"};
 	        presetRandomizeBox = new JComboBox<String>(presetOrRandom);
@@ -129,9 +134,9 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        actionPanel.add(presetRandomizeBox);
 	        actionPanel.add(difficultyBox);
 	        actionPanel.add(sizeBox);
-	        presetRandomizeBox.setLocation(playButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
-	        sizeBox.setLocation(presetRandomizeBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, presetRandomizeBox.getY());
-	        difficultyBox.setLocation(sizeBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS,sizeBox.getY());
+	        presetRandomizeBox.setLocation(playButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, BOX_AND_BUTTON_Y);
+	        sizeBox.setLocation(presetRandomizeBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, BOX_AND_BUTTON_Y);
+	        difficultyBox.setLocation(sizeBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS,BOX_AND_BUTTON_Y);
 	        
 	        helpButton = new JButton("Help");
 	        rulesButton = new JButton("Rules");
@@ -143,11 +148,11 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        actionPanel.add(finishedButton);
 	        actionPanel.add(rotateButton);
 	        actionPanel.add(clearButton);
-	        finishedButton.setLocation(difficultyBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
-	        helpButton.setLocation(finishedButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
-	        rulesButton.setLocation(helpButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
-	        rotateButton.setLocation(rulesButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
-	        clearButton.setLocation(rotateButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, playButton.getY());
+	        finishedButton.setLocation(difficultyBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, BOX_AND_BUTTON_Y);
+	        helpButton.setLocation(finishedButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS,BOX_AND_BUTTON_Y);
+	        rulesButton.setLocation(helpButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, BOX_AND_BUTTON_Y);
+	        rotateButton.setLocation(rulesButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS,BOX_AND_BUTTON_Y);
+	        clearButton.setLocation(rotateButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, BOX_AND_BUTTON_Y);
 	        finishedButton.setSize(BOX_AND_BUTTON_SIZE);
 	        rulesButton.setSize(BOX_AND_BUTTON_SIZE);
 	        helpButton.setSize(BOX_AND_BUTTON_SIZE);
@@ -178,7 +183,13 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        helpButton.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
 	        		if(gameIsReady)
-	        			{help();}
+	        		{
+	        			finished();
+	        			if(!finished)
+	        			{
+	        				help();
+	        				}
+	        		}
 	        	}
 	        });
 	       	rulesButton.addActionListener(new ActionListener() {
@@ -337,7 +348,6 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			{
 				for(int j = 0;j<gridSize && isCorrect;j++)
 				{
-					//System.out.println("Current value at ("+i+","+j+"): "+grid[i][j].getValue()+"\tCorrect Value: "+(currentSpot+1));
 					if(grid[i][j].getValue() == currentSpot+1)
 					{
 						currentSpot++;
@@ -425,26 +435,26 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		int size;
 		if(sizeBox.getSelectedItem().equals("3x3"))
 		{
-			size=3;
+			size=THREE_BY_THREE_GRID_SIZE;
 		}
 		else if(sizeBox.getSelectedItem().equals("4x4"))
 		{
-			size=4;
+			size=FOUR_BY_FOUR_GRID_SIZE;
 		}
 		else if(sizeBox.getSelectedItem().equals("5x5"))
 		{
-			size=5;
+			size=FIVE_BY_FIVE_GRID_SIZE;
 		}
 		else
 		{
-			size=6;
+			size=SIX_BY_SIX_GRID_SIZE;
 		}
 		
 		return size;
 	}
 	
 	private int gridDifficulty() {
-		int difficulty =0;
+		int difficulty;
 		if(difficultyBox.getSelectedItem().equals("Easy"))
 		{
 			difficulty=EASY_DIFFICULTY_NUMBER_OF_ROTATIONS;
