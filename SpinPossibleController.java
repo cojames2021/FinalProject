@@ -376,7 +376,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			}
 			else
 			{
-				if(JOptionPane.showConfirmDialog(null, "About to move the "+(wrongTile+1)+" tile to its correct place by swapping the two tiles without rotating. Is this ok?",
+				if(JOptionPane.showConfirmDialog(gameFrame, "About to move the "+(wrongTile+1)+" tile to its correct place by swapping the two tiles without rotating. Is this ok?",
 						"Warning: Swapping tiles", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE) == 0)
 				{
 					gameGrid.swapTiles(wrongTile, correctTile);
