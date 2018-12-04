@@ -40,12 +40,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private final int FIVE_BY_FIVE_GRID_SIZE = 5;
 	private final int SIX_BY_SIX_GRID_SIZE = 6;
 	private final int HELP_MAX = 3;
-<<<<<<< HEAD
-	private int[] fillInStand = new int[10]; private int currentStand = 0; private int[] stand = {};
-=======
 	private final int BOX_AND_BUTTON_Y;
->>>>>>> a8a501f6d8b62741e05c161f978e1285ab9f38ec
-	
 	private final Dimension BOX_AND_BUTTON_SIZE = new Dimension(75,25);
 	private final int SPACE_BETWEEN_BOXES_AND_BUTTONS=100;
 
