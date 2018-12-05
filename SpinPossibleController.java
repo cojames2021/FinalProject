@@ -4,6 +4,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 
 public class SpinPossibleController extends JPanel implements MouseListener {
 	private Grid gameGrid;
@@ -38,7 +41,6 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private final int SIX_BY_SIX_GRID_SIZE = 6;
 	private final int HELP_MAX = 3;
 	private final int BOX_AND_BUTTON_Y;
-	
 	private final Dimension BOX_AND_BUTTON_SIZE = new Dimension(75,25);
 	private final int SPACE_BETWEEN_BOXES_AND_BUTTONS=100;
 
@@ -330,7 +332,9 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		boolean isCorrect = true;
 		boolean foundCorrect = false;
 		int wrongTile;
+		int wrong1 = -1;
 		int correctTile;
+		int correct1 = -1;
 		if(helpCounter>=HELP_MAX)
 		{
 			JOptionPane.showMessageDialog(gameFrame, "You have no more helps left!");
@@ -341,7 +345,6 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			{
 				for(int j = 0;j<gridSize && isCorrect;j++)
 				{
-					
 					if(grid[i][j].getValue() == currentSpot+1)
 					{
 						currentSpot++;
@@ -349,6 +352,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 					else
 					{	
 						isCorrect = false;
+						wrong1 = j;
 					}
 				}
 			}
@@ -358,17 +362,35 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			{
 				for(int j=0;j<gridSize && !foundCorrect;j++)
 				{
-					System.out.println("Current value at ("+i+","+j+"): "+grid[i][j].getValue()+"\tValue we need: "+(wrongTile+1));
+					//System.out.println("Current value at ("+i+","+j+"): "+grid[i][j].getValue()+"\tValue we need: "+(wrongTile+1));
 					if(grid[i][j].getValue()==wrongTile+1)
 					{
 						foundCorrect = true;
+						correct1 = j;
 					}
 					else currentSpot++;
 				}
 			}
-				correctTile = currentSpot;
-				gameGrid.swapTiles(wrongTile, correctTile);
+			correctTile = currentSpot;
+			
+			if(wrong1 <= correct1)
+			{
+				gameGrid.clear();
+				gameGrid.selectTile(wrongTile);
+				gameGrid.selectTile(correctTile);
+				gameGrid.rotateRectangle();
 				helpCounter++;
+			}
+			else
+			{
+				if(JOptionPane.showConfirmDialog(gameFrame, "About to move the "+(wrongTile+1)+" tile to its correct place by swapping the two tiles without rotating. Is this ok?",
+						"Warning: Swapping tiles", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE) == 0)
+				{
+					gameGrid.swapTiles(wrongTile, correctTile);
+					helpCounter++;
+				}
+			}
+			
 		}
 	}
 
@@ -511,6 +533,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		
 		return filename;
 	}
+
 	
 //	private void error(Exception enemyStand)
 //	{

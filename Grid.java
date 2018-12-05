@@ -290,6 +290,10 @@ public class Grid<T> extends JPanel {
 		int gridY = mouseY/tileHeight;
 		selectTile(tileGrid[gridY][gridX]);
 	}
+	public void selectTile(int tile)
+	{
+		selectTile(getTile(tile));
+	}
 	public void selectTile(Tile<T> tile) // Originally returned the tile found at the given position in tileGrid; now, sets that tile's selected value to the boolean parameter.
 	{
 		checkInitialization();
