@@ -131,7 +131,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        sizeBox.setLocation(presetRandomizeBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, BOX_AND_BUTTON_Y);
 	        difficultyBox.setLocation(sizeBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS,BOX_AND_BUTTON_Y);
 	        
-	        helpButton = new JButton("Help");
+	        helpButton = new JButton("Help?");
 	        rulesButton = new JButton("Rules");
 	        finishedButton = new JButton("Check");
 	        rotateButton = new JButton("Rotate");
@@ -271,20 +271,26 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		finished = false;
 		int correctSpotCounter=0;
 		int currentSpot = 1;
- 		for(int i = 1; i<=gridSize;i++)
+		int correctOrientationCounter = 0;
+ 		for(int i = 0; i<gridSize;i++)
 		{
- 			for(int j=1;j<=gridSize;j++)
+ 			for(int j=0;j<gridSize;j++)
  			{
-	 			if(grid[i-1][j-1].getValue()==currentSpot)
+	 			if(grid[i][j].getValue()==currentSpot)
 	 			{
 	 				correctSpotCounter++;
+	 				if(grid[i][j].getOrientation()==Tile.RIGHTSIDE_UP)
+	 				{
+	 					correctOrientationCounter++;
+	 				}
 	 			}
 	 			currentSpot++;
  			}
  			
  			
 		}
- 		if(correctSpotCounter==gridSize*gridSize)
+ 		
+ 		if(correctSpotCounter == gridSize*gridSize && correctOrientationCounter == gridSize*gridSize)
  		{
  			finished = true;
  		}
@@ -293,10 +299,6 @@ public class SpinPossibleController extends JPanel implements MouseListener {
  			JOptionPane.showMessageDialog(gameFrame, "You won!");
  			//createGrid(gridSize(), gridDifficulty());
  		}
-	}
-	
-	public boolean playGame() {
-		return false;
 	}
 	
 	private void readFile(String filename) {
