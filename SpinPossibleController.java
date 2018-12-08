@@ -135,20 +135,16 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	        
 	        helpButton = new JButton("Help?");
 	        rulesButton = new JButton("Rules");
-	        finishedButton = new JButton("Check");
 	        rotateButton = new JButton("Rotate");
 	        clearButton = new JButton("Clear");
 	        actionPanel.add(helpButton);
 	        actionPanel.add(rulesButton);
-	        actionPanel.add(finishedButton);
 	        actionPanel.add(rotateButton);
 	        actionPanel.add(clearButton);
-	        finishedButton.setLocation(difficultyBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, BOX_AND_BUTTON_Y);
-	        helpButton.setLocation(finishedButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS,BOX_AND_BUTTON_Y);
+	        helpButton.setLocation(difficultyBox.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS,BOX_AND_BUTTON_Y);
 	        rulesButton.setLocation(helpButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, BOX_AND_BUTTON_Y);
 	        rotateButton.setLocation(rulesButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS,BOX_AND_BUTTON_Y);
 	        clearButton.setLocation(rotateButton.getX()+SPACE_BETWEEN_BOXES_AND_BUTTONS, BOX_AND_BUTTON_Y);
-	        finishedButton.setSize(BOX_AND_BUTTON_SIZE);
 	        rulesButton.setSize(BOX_AND_BUTTON_SIZE);
 	        helpButton.setSize(BOX_AND_BUTTON_SIZE);
 	        rotateButton.setSize(BOX_AND_BUTTON_SIZE);
@@ -208,21 +204,17 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 						JScrollPane logEntries = new JScrollPane(text);
 						JOptionPane.showMessageDialog(gameFrame, logEntries);
 					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						
 					}
 	       		}
 	       	});
-	        finishedButton.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {
-	        		finished();
-		        }
-		    });
+	        
 		    rotateButton.addActionListener(new ActionListener() {
 		        public void actionPerformed(ActionEvent e) {
 		        	if(gameIsReady)
 		        	{
 		        		rotate();
+		        		finished();
 		        	}
 		        }
 		    });
@@ -265,7 +257,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		try{gameGrid.rotateRectangle();}
 		catch (IllegalStateException i)
 		{
-			//error(i);
+			
 		}
 	}
 	
@@ -299,7 +291,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
  		if(finished)
  		{
  			JOptionPane.showMessageDialog(gameFrame, "You won!");
- 			//createGrid(gridSize(), gridDifficulty());
+ 			
  		}
 	}
 	
@@ -321,7 +313,7 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			fileReader.close();
 		} 
 		catch (FileNotFoundException e) {
-				//error(e);
+				
 		}
 	}
 	
@@ -362,7 +354,6 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 			{
 				for(int j=0;j<gridSize && !foundCorrect;j++)
 				{
-					//System.out.println("Current value at ("+i+","+j+"): "+grid[i][j].getValue()+"\tValue we need: "+(wrongTile+1));
 					if(grid[i][j].getValue()==wrongTile+1)
 					{
 						foundCorrect = true;
@@ -535,67 +526,4 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	}
 
 	
-//	private void error(Exception enemyStand)
-//	{
-//		setErrorMessage();
-//		JTextArea itsAn = new JTextArea(errorMessage);
-//		itsAn.setFont(new Font("Courier", Font.PLAIN ,3));
-//		itsAn.setEditable(false);
-//		JOptionPane.showMessageDialog(null, itsAn, enemyStand.getMessage(), JOptionPane.ERROR_MESSAGE, null);
-//		System.err.println(errorMessage);
-//	}
-//	private void setErrorMessage()
-//	{
-//		errorMessage = "\n%%%%%%%%%%%%%%%&@@@@@@@@@@&%%#############%@@@@@@%#########&@@@@@@#((((((((#%&&&&&&&&&&&(///*,.\r\n" + 
-//				"%%%%%%%%%%%%%@@@@@@@@@@@%################@@@@@@@#########&@&%#((((((###%&&&&&&&&&&&&(/*..........\r\n" + 
-//				"%%%%%%%%%%@@@@@@@@@@@################%@@@@@@###%%%#(((((((##%&&&&&&&&&&&&&%#(//////............\r\n" + 
-//				"%%%%%%%&@@@@@@@@@@&%%#################&@@@@@@%%&%#((((((##%&&&&&&&&&&&&&@@&%/(////////............(\r\n" + 
-//				"%%%%@@@@@@@@@@@@%%##################&%@@@@%#(((((((#%&&&&&&&&&&&&&&@&&&&(/////////,...........*##\r\n" + 
-//				"%&@@@@@@@@@@@@%###################%&%#(((((((#%%&&&&&&&&&&&&&@@@@@&&&((/////////*,............*#&\r\n" + 
-//				"@@@@@@@@@@@###############%%%#((((((((%%%&&&&&&&&&&&&&@@@@@@&&&&&&&&(#%%&&&&&&&&&&&@@@&%*....*%&&\r\n" + 
-//				"@@@@@@@@@&%###########%(((((((##&&&&&&&&&&&&&&&&&&%@@@@@@@&&&@@&&&&%#(#%&@@@@@@@@@%##(#%&&&%%&&%#\r\n" + 
-//				"@@@@@@@%######%&%##((((((##%%&&&&&&&&&&&&&&%&*,%%%%@@@@@&&&&&&&&&@@@@&%#/***,,,,,,,/&@@@%#%&&%(///(\r\n" + 
-//				"@@@@@&&#((((#(#%%&&&&&&&&&&&&&&&&&&##*/(%*#&&@@@@@&&@@&&&@#******#&&,.         &@@@@&&&/////(\r\n" + 
-//				"#((((((#&&&%&&&&&&&&&&&&&&&&&&&&@@@@@@@(%,/(%&/#&@@@&&@&&&&&@&*.    * #&&*/.        %@@&&&(/////(\r\n" + 
-//				"&&&&&&&&&&&&&&&&&&&&&&&&&%#/&@@&&@@@@@/&(,,*%&&%.#&%#&&&&&&@%,..     %%%%&*        &@@%(#&&///////(\r\n" + 
-//				"&&&&&&&&&&&&&&&&&&%%./&&,*****%@/%%&@/&&&&&&&&/%%&&&&&&&&@@@/...      ,/,        .@@#/,(%%/(%(/*,./\r\n" + 
-//				"&&&&&&&&@@@/.       #&&&(.,****/@&&%**/(&%%&&&&(%%%%&&&@&&&%@@(...             /&@&%*.,##/(*,...,**\r\n" + 
-//				"@,...,#&&%(@&...         ..***%@&&&%##((&%%%////(%%%&&&&&&&&&&@%*     .,(&@@@@%/..../............\r\n" + 
-//				"@,,,(,,(%&%/%@&*...       .*&&&&&&(/////%%//(&(////////(%&&&&&&&#%&&&@@&%%#(**...*,..............\r\n" + 
-//				"#/,/##*/(%%#(.%%@@@@&%&%@@&&&&&&((///(%%///%/*,,....*//%%&&&&%&&&&&(/////*.... *,*.,/*,....  ..\r\n" + 
-//				"(%,/###(#%##((/*,.,.,&//%&&&&&&@&//////#&(///#*.....,///(#&&&&&&&&&&&%#//////*.......,*..,.*.......\r\n" + 
-//				"(&,//(((////((((((#%&&&&&&&&&&&&%(/////%%////(,..............#%&&&&&&&%#////............     ......\r\n" + 
-//				"/*(//#((////////////(%%&&&&&&&%&%//////%%/#///,..............*%%%%%&%%&&%#(/..............  . .....\r\n" + 
-//				"//(//(#/////////////(%&&&&&%%%%&/////%%(%%(/,..............#%%%&&&&&&&&&%(/,.....................\r\n" + 
-//				"##(#/(#/////////////#%&&&(//////&&(////%#%#/*............,///**///((#%&&&%%(*.........   .. .....\r\n" + 
-//				"/##///(///////////(%%/////////#&(////&&(#%#/*.......................,*/(##%%(/*....... . .. .....\r\n" + 
-//				",/###/////////////%%#////////////#%////&%#(%#//,...........................*/(%#/*......  ........,\r\n" + 
-//				",./#(#(///////////#(///////////////////&%(.*/*(#........................... ..*/(//..... .  ....../\r\n" + 
-//				",../#(#////////////////////////.../////%%,...,/%,...............................,///,...    ..,/..,\r\n" + 
-//				"#.../%((/////////////////////,...//////((.....,%,.................................,*/,...   .,*...*\r\n" + 
-//				"*(,../%#/(/////////////////...../(((////*......(,.....,,..........................  ,/....  .*,..**\r\n" + 
-//				"***/..//(%///////////////,.....((#(##///,.......*..../,,,......................... ...*.... ,,*,...\r\n" + 
-//				"****#..#,((/////////////....../#%%%%%*//.............%((*(.....................  .     .   ..**....\r\n" + 
-//				"*****/**//%((/////////*....../%%%%%%#,//.............,%(/(/,...................    .        */.....\r\n" + 
-//				"*******#/.#(#////////,....../#%%%%%%//,........(//#//*//(*,...................   .      .**,.....\r\n" + 
-//				"*********#.%((///////......*/%%%/////(((/......*/(((/....../(...................         .//*......\r\n" + 
-//				"*********&,*#%//////,......//%%/////////#*....(//...........,/..................         ,**... ..*\r\n" + 
-//				"*********#*.((//////.......//%(////////*/#(%%#/,............../.................        .,,..   ..#\r\n" + 
-//				"*********/,(.#%/////.......//%//////,....,/(%(................................          ,..     .*%\r\n" + 
-//				"**********..*,(////*.......//%%%(/,..........................,,*,............                    %&\r\n" + 
-//				"*********,,.,.*#///,.......//%##%%%%#(*. .............,*(%%%%&(.,#...........                 . .%%\r\n" + 
-//				"**********(.././///........//&%(*/%%%%%%%%&&&&&%%%%%%%%%%&%*..*,*(...........                   /%%\r\n" + 
-//				"**********#.....///........//&/*(/,,,**(%%&&&&&&&&%%#*. /.. .*(*%**.........                 . .%&/\r\n" + 
-//				"**********/...(.///,.......,/(//***((,,,,******.       .&&&&&&&&**(......                    . .%//\r\n" + 
-//				"********#@@*..(.,//,.......,//(%//,%%&&&%%%%%***,/(%&&&&&&&&&&&&***......                     .#(//\r\n" + 
-//				"*****%@@((../#.//,......../*##***%%&&&&&&&&&&&@@&&&&&&&&&&&&&%#(**.....                  .  .////\r\n" + 
-//				"*/&&&((&&&,./(.,/*........//(/*///%&&&&&&&&&&&@&&&&&&&%#((&&%***,/.....                .... *////\r\n" + 
-//				"&&&(#&&(/(..///.//........//,/(**,%&&&&&&&&&&&@&&&(*******#%**,,........                ....#////\r\n" + 
-//				"((((#&&(((//,.*/&.,/........*/.((**,%&&&&&&&&&&&&&&/***********,,,  ...                    .../////\r\n" + 
-//				"((#&&((((///%.,/%/./,.......,/,./%***%&&&&&&&&&&&/*********#,,,  .....                    .(/////\r\n" + 
-//				"&&&((((((/(((,,(&&,,/........//.,//**&&&&&&&&&&&/***********,,   ,........... ...      ....(/////\r\n" + 
-//				"&%(((((((((((%,/&&(./........//,..%**/%&&&&&%#&//////*****/*,. ....................... ...#//////";
-//	}
-
-
 }

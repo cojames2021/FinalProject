@@ -1,0 +1,41 @@
+. Welcome to Spin Possible! 
+/n
+. The goal of the game is to 
+/n
+. rotate rectangles so that 
+/n
+. the numbers are in order 
+/n
+. starting with 1 in the top 
+/n
+. left and ending with the 
+/n
+. biggest in the bottom right. 
+/n
+. To select a rectangle, 
+/n
+. the player will select 
+/n
+. two different squares. 
+/n
+. This will form a rectangle 
+/n
+. and then all the user must 
+/n
+. do is click "Rotate." 
+/n
+ If you win, a prompt will let you 
+/n
+. know. If you get stuck, click "help" 
+/n
+. and a tile will be swapped 
+/n
+. into its correct position. 
+/n
+. Don't get too click-happy 
+/n
+. because you can only use 
+/n
+. the help function a limited 
+/n
+. number of times.
