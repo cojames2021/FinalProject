@@ -2,18 +2,12 @@ package spinPossible;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -24,7 +18,6 @@ public class Tile<T> extends JPanel {
 	public static final int UPSIDE_DOWN = 1;
 	public static final int RIGHTSIDE_UP = 0;
 	private boolean selected;
-	private boolean rotating; // This value is used in the paintComponent method. It is false by default, but set to true when changeOrientation is called. If true, paintComponent rotates the tile 180 degrees, then sets it back to false.
 	private final Color DEFAULT_COLOR = new Color(220,220,220);
 	private final Color SELECTED_COLOR = new Color(255,255,200);
 	private JLabel valueText;
@@ -34,7 +27,6 @@ public class Tile<T> extends JPanel {
 		VALUE = value;
 		orientation = RIGHTSIDE_UP;
 		selected = false;
-		rotating = false;
 		/*this.setBounds(x,y,width,height);*/
 		this.setLayout(new BorderLayout());
 		valueText = new JLabel(value.toString());
@@ -70,7 +62,6 @@ public class Tile<T> extends JPanel {
 	}
 	public void changeOrientation()
 	{
-		rotating = true;
 		//System.out.println(rotating);
 		if(orientation==RIGHTSIDE_UP)
 		{
@@ -96,7 +87,6 @@ public class Tile<T> extends JPanel {
 			/*super.repaint();
 			revalidate();
 			this.repaint(); //*/
-			rotating = false;
 		}
 		super.paintComponent(g2d);
 	}// */

@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.util.Random;
 
 import javax.swing.JPanel;
@@ -18,6 +17,7 @@ public class Grid<T> extends JPanel {
 	private final int MAXIMUM_DIMENSIONS = 6;
 	private final int MINIMUM_DIMENSIONS = 3;
 	private boolean initialized = false;
+
 	
 	
 /************************************************************************************************************************
@@ -64,16 +64,12 @@ public class Grid<T> extends JPanel {
 		int top2 = -1;
 		int bottom1 = -1;
 		int bottom2 = -1;
-		Tile<T> temp1;
-		Tile<T> temp2;
 		int topLeft = findTopLeftSelectedTile();
 		int bottomRight = findBottomRightSelectedTile();
 		top1 = coord1(topLeft);
 		top2 = coord2(topLeft);
 		bottom1 = coord1(bottomRight);
 		bottom2 = coord2(bottomRight);
-		GridBagLayout layout = (GridBagLayout)this.getLayout();
-		GridBagConstraints constraints = new GridBagConstraints();
 		
 		if(top1 < 0 || bottom1 < 0 || top2 < 0 || bottom2 < 0) // one of the coordinates is still -1, indicating that no selected tiles were found, so there is nothing that can be rotated. Throw an exception and terminate the function.
 		{
