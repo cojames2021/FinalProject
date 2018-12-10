@@ -27,7 +27,6 @@ public class Tile<T> extends JPanel {
 		VALUE = value;
 		orientation = RIGHTSIDE_UP;
 		selected = false;
-		/*this.setBounds(x,y,width,height);*/
 		this.setLayout(new BorderLayout());
 		valueText = new JLabel(value.toString());
 		valueText.setHorizontalAlignment(JLabel.CENTER);
@@ -80,7 +79,7 @@ public class Tile<T> extends JPanel {
 
 		}
 		super.paintComponent(g2d);
-	}// */
+	}
 	public boolean isSelected()
 	{
 		return selected;

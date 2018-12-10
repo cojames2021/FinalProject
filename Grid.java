@@ -17,7 +17,7 @@ public class Grid<T> extends JPanel {
 	private final int MAXIMUM_DIMENSIONS = 6;
 	private final int MINIMUM_DIMENSIONS = 3;
 	private boolean initialized = false;
-		
+
 	@SuppressWarnings("unchecked")
 	public Grid(int dimensions, Container gridPanel)
 	{

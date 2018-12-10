@@ -51,8 +51,13 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private JComboBox<String> presetRandomizeBox;
 	
 	private JPanel gridPanel;
+<<<<<<< HEAD
 	private JPanel actionPanel;	
 
+=======
+	private JPanel actionPanel;
+	
+>>>>>>> ef57b80d1214bf8657a10421bb4d9379b0ebd479
 	
 	public static void main(String[] args) {
 		SpinPossibleController myController = new SpinPossibleController("Spin Possible", 50, 50, 1000, 700);
