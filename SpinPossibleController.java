@@ -51,33 +51,8 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 	private JComboBox<String> presetRandomizeBox;
 	
 	private JPanel gridPanel;
-	private JPanel actionPanel;
-	
-//	private String errorMessage;
-	
-	/**********************************************************************************
-	 * (Initial JOptionPane, probably)
-	 * Welcome to SpinPossible!
-	 * - Play
-	 * - Import Custom Grid
-	 * - Quit
-	 * 
-	 * ("Import Custom Grids")
-	 * JInputDialogue asking for filename, etc >> opens file or errors out back to main menu
-	 * 
-	 * ("Play" Menu)
-	 * 		[easy 4x4]
-	 *  	{Preset Grid}		{Randomly generate a grid}
-	 *  
-	 * 
-	 * (The actual grid)
-	 * 		{ROTATE!!!!!!}
-	 * 		
-	 * 
-	 * [] - dropdown menu
-	 * {} - button
-	 * O - radio button
-	 ********************************************************************************/
+	private JPanel actionPanel;	
+
 	
 	public static void main(String[] args) {
 		SpinPossibleController myController = new SpinPossibleController("Spin Possible", 50, 50, 1000, 700);
@@ -252,7 +227,6 @@ public class SpinPossibleController extends JPanel implements MouseListener {
 		try{gameGrid.rotateRectangle();}
 		catch (IllegalStateException i)
 		{
-			
 		}
 	}
 	
