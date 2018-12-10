@@ -27,7 +27,6 @@ public class Tile<T> extends JPanel {
 		VALUE = value;
 		orientation = RIGHTSIDE_UP;
 		selected = false;
-		/*this.setBounds(x,y,width,height);*/
 		this.setLayout(new BorderLayout());
 		valueText = new JLabel(value.toString());
 		valueText.setHorizontalAlignment(JLabel.CENTER);
@@ -62,7 +61,6 @@ public class Tile<T> extends JPanel {
 	}
 	public void changeOrientation()
 	{
-		//System.out.println(rotating);
 		if(orientation==RIGHTSIDE_UP)
 		{
 			orientation=UPSIDE_DOWN;
@@ -70,12 +68,6 @@ public class Tile<T> extends JPanel {
 		else {
 			orientation=RIGHTSIDE_UP;
 		}
-	//	repaint();
-	//	revalidate();
-		//paintComponent(getGraphics());
-		/*Graphics2D g2d = (Graphics2D)getGraphics();
-		g2d.rotate(Math.toRadians(180),getWidth()/2,getHeight()/2);
-		super.paint(g2d); // */
 	}
 	@Override
 	public void paintComponent(Graphics g)
@@ -84,12 +76,9 @@ public class Tile<T> extends JPanel {
 		if(orientation == UPSIDE_DOWN)
 		{
 			g2d.rotate(Math.toRadians(180),getWidth()/2,getHeight()/2);
-			/*super.repaint();
-			revalidate();
-			this.repaint(); //*/
 		}
 		super.paintComponent(g2d);
-	}// */
+	}
 	public boolean isSelected()
 	{
 		return selected;
